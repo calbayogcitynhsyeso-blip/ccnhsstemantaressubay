@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Leaf, TrendingDown, Users, Award } from "lucide-react";
+import { TrendingDown, Users, Award } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
+import yesoLogo from "@/assets/yes-o-logo.jpg";
 
 export function Hero() {
   return (
@@ -20,9 +21,13 @@ export function Hero() {
         <div className="space-y-8">
           {/* Logo and Title */}
           <div className="space-y-4">
-            <div className="flex items-center justify-center space-x-3">
-              <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center shadow-glow">
-                <Leaf className="w-8 h-8 text-primary-foreground" />
+            <div className="flex items-center justify-center space-x-4">
+              <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full p-2 shadow-glow">
+                <img 
+                  src={yesoLogo} 
+                  alt="YES-O Logo" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground">
                 EcoPulse

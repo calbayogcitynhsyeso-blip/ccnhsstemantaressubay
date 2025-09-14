@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Leaf, Menu, Home, BarChart3, Trophy, Info } from "lucide-react";
+import { Menu, Home, BarChart3, Trophy, Info } from "lucide-react";
+import yesoLogo from "@/assets/yes-o-logo.jpg";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,9 +28,11 @@ export function Navigation() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
-              <Leaf className="w-5 h-5 text-primary-foreground" />
-            </div>
+            <img 
+              src={yesoLogo} 
+              alt="YES-O Logo" 
+              className="w-10 h-10 object-contain"
+            />
             <span className="text-xl font-bold text-primary">EcoPulse</span>
           </div>
 
@@ -58,9 +61,11 @@ export function Navigation() {
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <div className="flex flex-col space-y-6 mt-8">
                   <div className="flex items-center space-x-3 pb-6 border-b border-border">
-                    <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
-                      <Leaf className="w-5 h-5 text-primary-foreground" />
-                    </div>
+                    <img 
+                      src={yesoLogo} 
+                      alt="YES-O Logo" 
+                      className="w-10 h-10 object-contain"
+                    />
                     <span className="text-xl font-bold text-primary">EcoPulse</span>
                   </div>
                   
