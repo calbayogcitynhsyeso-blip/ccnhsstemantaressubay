@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { TrendingDown, Users, Award } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
-import yesoLogo from "@/assets/yes-o-circular-logo.jpg";
+import yesoLogo from "@/assets/yes-o-logo-transparent.png";
 
 export function Hero() {
   return (
