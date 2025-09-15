@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Car, Zap, UtensilsCrossed, Trash2, Plus, TrendingUp } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Car, Zap, UtensilsCrossed, Trash2, Plus, TrendingUp, Edit3 } from "lucide-react";
 
 interface Activity {
   id: string;
@@ -53,6 +54,7 @@ const categoryConfig = {
 export function ActivityLogger() {
   const [selectedActivities, setSelectedActivities] = useState<{[key: string]: number}>({});
   const [activeCategory, setActiveCategory] = useState<string>('transport');
+  const [editingActivity, setEditingActivity] = useState<string | null>(null);
 
   const totalCarbon = Object.entries(selectedActivities).reduce((total, [activityId, quantity]) => {
     const activity = activities.find(a => a.id === activityId);
@@ -63,6 +65,13 @@ export function ActivityLogger() {
     setSelectedActivities(prev => ({
       ...prev,
       [activityId]: Math.max(0, (prev[activityId] || 0) + change)
+    }));
+  };
+
+  const setActivityValue = (activityId: string, value: number) => {
+    setSelectedActivities(prev => ({
+      ...prev,
+      [activityId]: Math.max(0, value)
     }));
   };
 
@@ -148,9 +157,27 @@ export function ActivityLogger() {
                     >
                       -
                     </Button>
-                    <span className="font-semibold min-w-[3rem] text-center">
-                      {quantity} {activity.unit}
-                    </span>
+                    {editingActivity === activity.id ? (
+                      <Input
+                        type="number"
+                        min="0"
+                        step="0.1"
+                        value={quantity}
+                        onChange={(e) => setActivityValue(activity.id, parseFloat(e.target.value) || 0)}
+                        onBlur={() => setEditingActivity(null)}
+                        onKeyDown={(e) => e.key === 'Enter' && setEditingActivity(null)}
+                        className="w-20 h-8 text-center"
+                        autoFocus
+                      />
+                    ) : (
+                      <div 
+                        className="font-semibold min-w-[3rem] text-center cursor-pointer hover:bg-muted rounded px-2 py-1 flex items-center space-x-1"
+                        onClick={() => setEditingActivity(activity.id)}
+                      >
+                        <span>{quantity} {activity.unit}</span>
+                        <Edit3 className="w-3 h-3 opacity-50" />
+                      </div>
+                    )}
                     <Button
                       variant="outline"
                       size="sm"

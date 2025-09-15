@@ -10,7 +10,7 @@ export function About() {
           About EcoPulse
         </h2>
         <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-          A project by the Calbayog City National High School – Youth for Environment in Schools Organization (YES-O)
+          A project made by the Calbayog City National High School — Youth for Environment in Schools Organization S.Y. 2025-2026
         </p>
       </div>
 
@@ -23,7 +23,7 @@ export function About() {
                 <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
                   <Target className="w-5 h-5 text-primary-foreground" />
                 </div>
-                <CardTitle className="text-xl">Our Mission</CardTitle>
+                <CardTitle className="text-xl">EcoPulse's Mission</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
@@ -42,7 +42,7 @@ export function About() {
                 <div className="w-10 h-10 bg-gradient-secondary rounded-full flex items-center justify-center">
                   <Leaf className="w-5 h-5 text-secondary-foreground" />
                 </div>
-                <CardTitle className="text-xl">Our Vision</CardTitle>
+                <CardTitle className="text-xl">EcoPulse's Vision</CardTitle>
               </div>
             </CardHeader>
             <CardContent>

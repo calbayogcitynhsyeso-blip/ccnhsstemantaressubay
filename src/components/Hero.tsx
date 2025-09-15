@@ -36,7 +36,7 @@ export function Hero() {
             <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto">
               Track your carbon footprint, make a difference.
               <br />
-              <span className="text-lg opacity-80">Join CCNHS YES-O students in building a sustainable future</span>
+              <span className="text-lg opacity-80">Join CCNHS YES-Organization in building a sustainable future</span>
             </p>
           </div>
 
