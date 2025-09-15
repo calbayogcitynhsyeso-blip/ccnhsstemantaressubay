@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { TrendingDown, Users, Award } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/yes-o-group-photo.png";
 import yesoLogo from "@/assets/yes-o-logo-cropped.png";
 
 export function Hero() {
+  const navigate = useNavigate();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
       {/* Background Image with Overlay */}
@@ -60,10 +63,11 @@ export function Hero() {
           </div>
 
           {/* Call to Action */}
-          <div className="space-y-4 mt-12">
+          <div className="space-y-4 mt-12 animate-slide-up">
             <Button 
               size="lg" 
-              className="bg-accent hover:bg-accent/90 text-accent-foreground px-8 py-4 text-lg font-semibold rounded-full shadow-strong hover:shadow-glow transition-all duration-300"
+              onClick={() => navigate("/auth")}
+              className="bg-accent hover:bg-accent/90 text-accent-foreground px-8 py-4 text-lg font-semibold rounded-full warm-glow hover-lift transition-all duration-300"
             >
               Start Tracking Now
             </Button>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,62 +10,65 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* EcoPulse Design System - Nature-Inspired Colors */
-    --background: 120 20% 98%;
-    --foreground: 140 15% 15%;
+    /* EcoPulse Design System - Warm & Modern Colors */
+    --background: 25 15% 98%;
+    --foreground: 20 10% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 140 15% 15%;
+    --card-foreground: 20 10% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 140 15% 15%;
+    --popover-foreground: 20 10% 15%;
 
-    /* Primary: Forest Green */
-    --primary: 142 76% 36%;
+    /* Primary: Warm Forest Green */
+    --primary: 135 65% 42%;
     --primary-foreground: 0 0% 98%;
-    --primary-glow: 142 76% 55%;
+    --primary-glow: 135 65% 60%;
 
-    /* Secondary: Ocean Blue */
-    --secondary: 200 89% 47%;
-    --secondary-foreground: 0 0% 98%;
+    /* Secondary: Warm Sage */
+    --secondary: 150 25% 65%;
+    --secondary-foreground: 20 10% 15%;
 
-    /* Muted: Soft Earth Tones */
-    --muted: 120 20% 95%;
-    --muted-foreground: 140 15% 40%;
+    /* Muted: Warm Cream Tones */
+    --muted: 35 25% 94%;
+    --muted-foreground: 20 15% 45%;
 
-    /* Accent: Warm Amber */
-    --accent: 38 92% 50%;
-    --accent-foreground: 0 0% 98%;
+    /* Accent: Golden Honey */
+    --accent: 42 85% 55%;
+    --accent-foreground: 20 10% 15%;
 
-    /* Success: Vibrant Green */
-    --success: 120 75% 45%;
+    /* Success: Fresh Green */
+    --success: 120 60% 50%;
     --success-foreground: 0 0% 98%;
 
-    /* Destructive: Coral Red */
-    --destructive: 0 84% 60%;
+    /* Destructive: Warm Coral */
+    --destructive: 8 75% 58%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 120 20% 90%;
-    --input: 120 20% 96%;
-    --ring: 142 76% 36%;
+    --border: 35 20% 88%;
+    --input: 35 25% 95%;
+    --ring: 135 65% 42%;
 
-    --radius: 0.75rem;
+    --radius: 0.875rem;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 76% 55%));
-    --gradient-secondary: linear-gradient(135deg, hsl(200 89% 47%), hsl(200 89% 67%));
-    --gradient-hero: linear-gradient(135deg, hsl(142 76% 36%), hsl(200 89% 47%), hsl(38 92% 50%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(120 20% 98%));
+    /* Warm Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(135 65% 42%), hsl(135 65% 60%));
+    --gradient-secondary: linear-gradient(135deg, hsl(150 25% 65%), hsl(150 25% 80%));
+    --gradient-hero: linear-gradient(135deg, hsl(135 65% 42%), hsl(42 85% 55%), hsl(8 75% 58%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(35 25% 96%));
+    --gradient-warm: linear-gradient(135deg, hsl(42 85% 55%), hsl(25 75% 65%));
 
-    /* Shadows */
-    --shadow-soft: 0 2px 8px -2px hsl(142 76% 36% / 0.1);
-    --shadow-medium: 0 8px 24px -4px hsl(142 76% 36% / 0.15);
-    --shadow-strong: 0 16px 40px -8px hsl(142 76% 36% / 0.2);
-    --shadow-glow: 0 0 20px hsl(142 76% 55% / 0.3);
+    /* Soft Shadows */
+    --shadow-soft: 0 2px 8px -2px hsl(135 65% 42% / 0.08);
+    --shadow-medium: 0 8px 24px -4px hsl(135 65% 42% / 0.12);
+    --shadow-strong: 0 16px 40px -8px hsl(135 65% 42% / 0.16);
+    --shadow-glow: 0 0 24px hsl(42 85% 55% / 0.25);
+    --shadow-warm: 0 4px 16px -2px hsl(42 85% 55% / 0.15);
 
-    /* Animations */
+    /* Smooth Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --transition-gentle: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .dark {
@@ -110,7 +115,80 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    font-family: 'Inter', 'Poppins', system-ui, -apple-system, sans-serif;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', 'Poppins', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  .animate-fade-in {
+    animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .hover-lift {
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+
+  .warm-glow {
+    box-shadow: var(--shadow-warm);
+  }
+
+  .warm-glow:hover {
+    box-shadow: var(--shadow-glow);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
