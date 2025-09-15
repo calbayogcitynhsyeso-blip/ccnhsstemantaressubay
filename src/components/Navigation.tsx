@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Home, BarChart3, Trophy, Info } from "lucide-react";
-import yesoLogo from "@/assets/yes-o-logo-transparent.png";
+import yesoLogo from "@/assets/yes-o-logo-cropped.png";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
