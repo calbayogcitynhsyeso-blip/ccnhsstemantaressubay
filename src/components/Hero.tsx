@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { TrendingDown, Users, Award } from "lucide-react";
-import heroImage from "@/assets/hero-image.jpg";
+import heroImage from "@/assets/yes-o-group-photo.png";
 import yesoLogo from "@/assets/yes-o-logo-cropped.png";
 
 export function Hero() {
@@ -10,7 +10,7 @@ export function Hero() {
       <div className="absolute inset-0">
         <img 
           src={heroImage} 
-          alt="Students engaging with environmental technology"
+          alt="CCNHS YES-Organization students group photo"
           className="w-full h-full object-cover opacity-20"
         />
         <div className="absolute inset-0 bg-gradient-hero opacity-80" />
