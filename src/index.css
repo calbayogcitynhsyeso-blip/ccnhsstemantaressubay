@@ -54,7 +54,7 @@ All colors MUST be HSL.
     /* Modern Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(221.2 83.2% 53.3%), hsl(221.2 83.2% 65%));
     --gradient-secondary: linear-gradient(135deg, hsl(210 40% 96%), hsl(210 40% 98%));
-    --gradient-hero: linear-gradient(135deg, hsl(221.2 83.2% 53.3%), hsl(262.1 83.3% 57.8%), hsl(270 95.2% 75.3%));
+    --gradient-hero: linear-gradient(135deg, hsl(142 69% 58%), hsl(221.2 83.2% 53.3%), hsl(25 95% 60%));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 40% 98%));
     --gradient-warm: linear-gradient(135deg, hsl(262.1 83.3% 57.8%), hsl(270 95.2% 75.3%));
 
