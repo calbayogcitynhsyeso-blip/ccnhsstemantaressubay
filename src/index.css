@@ -10,60 +10,60 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* EcoPulse Design System - Warm & Modern Colors */
-    --background: 25 15% 98%;
-    --foreground: 20 10% 15%;
+    /* EcoPulse Design System - Modern & Clean Colors */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 20 10% 15%;
+    --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 20 10% 15%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-    /* Primary: Warm Forest Green */
-    --primary: 135 65% 42%;
-    --primary-foreground: 0 0% 98%;
-    --primary-glow: 135 65% 60%;
+    /* Primary: Modern Blue */
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --primary-glow: 221.2 83.2% 65%;
 
-    /* Secondary: Warm Sage */
-    --secondary: 150 25% 65%;
-    --secondary-foreground: 20 10% 15%;
+    /* Secondary: Cool Gray */
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
 
-    /* Muted: Warm Cream Tones */
-    --muted: 35 25% 94%;
-    --muted-foreground: 20 15% 45%;
+    /* Muted: Light Gray */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-    /* Accent: Golden Honey */
-    --accent: 42 85% 55%;
-    --accent-foreground: 20 10% 15%;
+    /* Accent: Vibrant Blue */
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
 
     /* Success: Fresh Green */
-    --success: 120 60% 50%;
-    --success-foreground: 0 0% 98%;
+    --success: 142.1 76.2% 36.3%;
+    --success-foreground: 355.7 100% 97.3%;
 
-    /* Destructive: Warm Coral */
-    --destructive: 8 75% 58%;
-    --destructive-foreground: 0 0% 98%;
+    /* Destructive: Modern Red */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 35 20% 88%;
-    --input: 35 25% 95%;
-    --ring: 135 65% 42%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
 
-    --radius: 0.875rem;
+    --radius: 0.5rem;
 
-    /* Warm Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(135 65% 42%), hsl(135 65% 60%));
-    --gradient-secondary: linear-gradient(135deg, hsl(150 25% 65%), hsl(150 25% 80%));
-    --gradient-hero: linear-gradient(135deg, hsl(135 65% 42%), hsl(42 85% 55%), hsl(8 75% 58%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(35 25% 96%));
-    --gradient-warm: linear-gradient(135deg, hsl(42 85% 55%), hsl(25 75% 65%));
+    /* Modern Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(221.2 83.2% 53.3%), hsl(221.2 83.2% 65%));
+    --gradient-secondary: linear-gradient(135deg, hsl(210 40% 96%), hsl(210 40% 98%));
+    --gradient-hero: linear-gradient(135deg, hsl(221.2 83.2% 53.3%), hsl(262.1 83.3% 57.8%), hsl(270 95.2% 75.3%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 40% 98%));
+    --gradient-warm: linear-gradient(135deg, hsl(262.1 83.3% 57.8%), hsl(270 95.2% 75.3%));
 
-    /* Soft Shadows */
-    --shadow-soft: 0 2px 8px -2px hsl(135 65% 42% / 0.08);
-    --shadow-medium: 0 8px 24px -4px hsl(135 65% 42% / 0.12);
-    --shadow-strong: 0 16px 40px -8px hsl(135 65% 42% / 0.16);
-    --shadow-glow: 0 0 24px hsl(42 85% 55% / 0.25);
-    --shadow-warm: 0 4px 16px -2px hsl(42 85% 55% / 0.15);
+    /* Clean Shadows */
+    --shadow-soft: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-medium: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-strong: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-glow: 0 0 0 1px hsl(221.2 83.2% 53.3% / 0.05), 0 1px 0 0 hsl(221.2 83.2% 53.3% / 0.05);
+    --shadow-warm: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 
     /* Smooth Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
