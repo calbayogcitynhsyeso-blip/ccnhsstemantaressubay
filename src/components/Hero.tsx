@@ -51,7 +51,7 @@ export function Hero() {
               <p className="text-primary-foreground/80 text-sm">Log daily activities and see your carbon footprint in real-time</p>
             </div>
             <div className="bg-card/10 backdrop-blur-sm rounded-2xl p-6 border border-primary-foreground/20">
-              <Users className="w-8 h-8 text-blue-400 mx-auto mb-3" />
+              <Users className="w-8 h-8 text-blue-300 mx-auto mb-3" />
               <h3 className="text-lg font-semibold text-primary-foreground mb-2">Community</h3>
               <p className="text-primary-foreground/80 text-sm">Compare with classmates and compete for sustainability goals</p>
             </div>
