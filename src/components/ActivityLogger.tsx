@@ -45,10 +45,10 @@ const activities: Activity[] = [
 ];
 
 const categoryConfig = {
-  transport: { icon: Car, color: 'bg-secondary', name: 'Transport' },
+  transport: { icon: Car, color: 'bg-primary', name: 'Transport' },
   electricity: { icon: Zap, color: 'bg-accent', name: 'Electricity' },
   food: { icon: UtensilsCrossed, color: 'bg-success', name: 'Food' },
-  waste: { icon: Trash2, color: 'bg-primary', name: 'Waste' }
+  waste: { icon: Trash2, color: 'bg-secondary', name: 'Waste' }
 };
 
 export function ActivityLogger() {
@@ -96,7 +96,7 @@ export function ActivityLogger() {
               <TrendingUp className="w-6 h-6 text-primary" />
               <h3 className="text-lg font-semibold">Today's Carbon Score</h3>
             </div>
-            <div className="text-4xl font-bold text-primary mb-1">
+            <div className="text-4xl font-bold mb-1" style={{color: 'hsl(142.1 76.2% 36.3%)'}}>
               {totalCarbon.toFixed(2)} kg CO₂
             </div>
             <p className="text-muted-foreground text-sm">

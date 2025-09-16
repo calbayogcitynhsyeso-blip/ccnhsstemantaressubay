@@ -25,7 +25,7 @@ const achievements: Achievement[] = [
     maxProgress: 1,
     unlocked: false,
     category: 'milestone',
-    color: 'text-accent'
+    color: 'hsl(45 90% 60%)'
   },
   {
     id: 'plastic-free',
@@ -36,7 +36,7 @@ const achievements: Achievement[] = [
     maxProgress: 7,
     unlocked: false,
     category: 'eco',
-    color: 'text-success'
+    color: 'hsl(142.1 76.2% 36.3%)'
   },
   {
     id: 'recycling-hero',
@@ -47,7 +47,7 @@ const achievements: Achievement[] = [
     maxProgress: 10,
     unlocked: false,
     category: 'eco',
-    color: 'text-primary'
+    color: 'hsl(200 70% 45%)'
   },
   {
     id: 'low-carbon',
@@ -58,7 +58,7 @@ const achievements: Achievement[] = [
     maxProgress: 7,
     unlocked: false,
     category: 'milestone',
-    color: 'text-accent'
+    color: 'hsl(45 90% 50%)'
   },
   {
     id: 'community-leader',
@@ -69,7 +69,7 @@ const achievements: Achievement[] = [
     maxProgress: 1,
     unlocked: false,
     category: 'social',
-    color: 'text-secondary'
+    color: 'hsl(142.1 60% 50%)'
   },
   {
     id: 'eco-month',
@@ -80,7 +80,7 @@ const achievements: Achievement[] = [
     maxProgress: 30,
     unlocked: false,
     category: 'milestone',
-    color: 'text-primary'
+    color: 'hsl(142.1 71.8% 29.2%)'
   },
 ];
 
@@ -108,10 +108,10 @@ export function Achievements() {
         <Card className="bg-gradient-card border-0 shadow-medium max-w-md mx-auto">
           <CardContent className="p-6">
             <div className="flex items-center justify-center space-x-3 mb-4">
-              <Award className="w-6 h-6 text-primary" />
+              <Award className="w-6 h-6" style={{color: 'hsl(142.1 76.2% 36.3%)'}} />
               <h3 className="text-lg font-semibold">Progress Overview</h3>
             </div>
-            <div className="text-3xl font-bold text-primary mb-2">
+            <div className="text-3xl font-bold mb-2" style={{color: 'hsl(142.1 76.2% 36.3%)'}}>
               {unlockedCount} / {totalCount}
             </div>
             <Progress value={(unlockedCount / totalCount) * 100} className="h-2" />
@@ -161,9 +161,9 @@ export function Achievements() {
                           <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
                             achievement.unlocked ? 'bg-primary/20' : 'bg-muted'
                           }`}>
-                            <Icon className={`w-6 h-6 ${
-                              achievement.unlocked ? achievement.color : 'text-muted-foreground'
-                            }`} />
+                            <Icon className="w-6 h-6" style={{
+                              color: achievement.unlocked ? achievement.color : 'hsl(215.4 16.3% 46.9%)'
+                            }} />
                           </div>
                           <div className="flex-1">
                             <CardTitle className={`text-lg ${
@@ -210,7 +210,7 @@ export function Achievements() {
       <div className="mt-16 text-center">
         <Card className="bg-gradient-secondary/10 border-secondary/20 shadow-soft max-w-lg mx-auto">
           <CardContent className="p-8">
-            <Star className="w-12 h-12 text-secondary mx-auto mb-4" />
+            <Star className="w-12 h-12 mx-auto mb-4" style={{color: 'hsl(142.1 76.2% 36.3%)'}} />
             <h3 className="text-xl font-semibold text-foreground mb-2">
               More Achievements Coming Soon!
             </h3>

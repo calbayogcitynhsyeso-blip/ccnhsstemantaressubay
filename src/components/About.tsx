@@ -20,8 +20,8 @@ export function About() {
           <Card className="bg-gradient-card border-0 shadow-medium">
             <CardHeader>
               <div className="flex items-center space-x-3 mb-2">
-                <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
-                  <Target className="w-5 h-5 text-primary-foreground" />
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{background: 'var(--gradient-primary)'}}>
+                  <Target className="w-5 h-5 text-white" />
                 </div>
                 <CardTitle className="text-xl">EcoPulse's Mission</CardTitle>
               </div>
@@ -39,8 +39,8 @@ export function About() {
           <Card className="bg-gradient-card border-0 shadow-medium">
             <CardHeader>
               <div className="flex items-center space-x-3 mb-2">
-                <div className="w-10 h-10 bg-gradient-secondary rounded-full flex items-center justify-center">
-                  <Leaf className="w-5 h-5 text-secondary-foreground" />
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{background: 'var(--gradient-warm)'}}>
+                  <Leaf className="w-5 h-5 text-white" />
                 </div>
                 <CardTitle className="text-xl">EcoPulse's Vision</CardTitle>
               </div>
@@ -61,8 +61,8 @@ export function About() {
           
           <div className="space-y-4">
             <div className="flex items-start space-x-4">
-              <div className="w-8 h-8 bg-success/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <Users className="w-4 h-4 text-success" />
+              <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1" style={{backgroundColor: 'hsl(142.1 76.2% 36.3% / 0.2)'}}>
+                <Users className="w-4 h-4" style={{color: 'hsl(142.1 76.2% 36.3%)'}} />
               </div>
               <div>
                 <h4 className="font-semibold text-foreground">Student-Friendly Design</h4>
@@ -73,8 +73,8 @@ export function About() {
             </div>
 
             <div className="flex items-start space-x-4">
-              <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <Target className="w-4 h-4 text-accent" />
+              <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1" style={{backgroundColor: 'hsl(150 60% 60% / 0.2)'}}>
+                <Target className="w-4 h-4" style={{color: 'hsl(150 60% 60%)'}} />
               </div>
               <div>
                 <h4 className="font-semibold text-foreground">Educational Focus</h4>
@@ -85,8 +85,8 @@ export function About() {
             </div>
 
             <div className="flex items-start space-x-4">
-              <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <Leaf className="w-4 h-4 text-primary" />
+              <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1" style={{backgroundColor: 'hsl(142.1 71.8% 29.2% / 0.2)'}}>
+                <Leaf className="w-4 h-4" style={{color: 'hsl(142.1 71.8% 29.2%)'}} />
               </div>
               <div>
                 <h4 className="font-semibold text-foreground">Community Impact</h4>
@@ -112,8 +112,8 @@ export function About() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center">
-            <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-3">
-              <MapPin className="w-6 h-6 text-primary-foreground" />
+            <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3" style={{background: 'var(--gradient-primary)'}}>
+              <MapPin className="w-6 h-6 text-white" />
             </div>
             <h4 className="font-semibold text-foreground mb-2">Address</h4>
             <p className="text-muted-foreground text-sm">
@@ -124,8 +124,8 @@ export function About() {
           </div>
 
           <div className="text-center">
-            <div className="w-12 h-12 bg-gradient-secondary rounded-full flex items-center justify-center mx-auto mb-3">
-              <Mail className="w-6 h-6 text-secondary-foreground" />
+            <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3" style={{background: 'var(--gradient-warm)'}}>
+              <Mail className="w-6 h-6 text-white" />
             </div>
             <h4 className="font-semibold text-foreground mb-2">Email</h4>
             <p className="text-muted-foreground text-sm">
@@ -134,8 +134,8 @@ export function About() {
           </div>
 
           <div className="text-center">
-            <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-3">
-              <Facebook className="w-6 h-6 text-accent" />
+            <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3" style={{backgroundColor: 'hsl(200 70% 45% / 0.2)'}}>
+              <Facebook className="w-6 h-6" style={{color: 'hsl(200 70% 45%)'}} />
             </div>
             <h4 className="font-semibold text-foreground mb-2">Follow Us</h4>
             <p className="text-muted-foreground text-sm">
@@ -147,7 +147,11 @@ export function About() {
         <div className="text-center mt-8">
           <Button 
             variant="outline" 
-            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+            className="text-white hover:text-white"
+            style={{
+              borderColor: 'hsl(142.1 76.2% 36.3%)',
+              backgroundColor: 'hsl(142.1 76.2% 36.3%)',
+            }}
           >
             Contact YES-O
           </Button>

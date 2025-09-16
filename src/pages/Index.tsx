@@ -2,6 +2,7 @@ import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { ActivityLogger } from "@/components/ActivityLogger";
 import { Achievements } from "@/components/Achievements";
+import { Leaderboard } from "@/components/Leaderboard";
 import { About } from "@/components/About";
 
 const Index = () => {
@@ -20,6 +21,10 @@ const Index = () => {
         
         <section id="achievements">
           <Achievements />
+        </section>
+        
+        <section id="leaderboard">
+          <Leaderboard />
         </section>
         
         <section id="about">

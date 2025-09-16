@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Home, BarChart3, Trophy, Info } from "lucide-react";
+import { Menu, Home, BarChart3, Trophy, Crown, Info } from "lucide-react";
 import yesoLogo from "@/assets/yes-o-logo-cropped.png";
 
 export function Navigation() {
@@ -11,6 +11,7 @@ export function Navigation() {
     { name: "Home", href: "#home", icon: Home },
     { name: "Track", href: "#track", icon: BarChart3 },
     { name: "Achievements", href: "#achievements", icon: Trophy },
+    { name: "Leaderboard", href: "#leaderboard", icon: Crown },
     { name: "About", href: "#about", icon: Info },
   ];
 
