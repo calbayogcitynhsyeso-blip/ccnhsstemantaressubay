@@ -61,9 +61,14 @@ All colors MUST be HSL.
     /* Environmental Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(142.1 71.8% 29.2%), hsl(142.1 71.8% 45%));
     --gradient-secondary: linear-gradient(135deg, hsl(142.1 34% 85%), hsl(142.1 34% 95%));
-    --gradient-hero: linear-gradient(135deg, hsl(142 69% 58% / 0.8), hsl(142.1 60% 40% / 0.9), hsl(125 65% 35% / 0.7));
+    --gradient-hero: linear-gradient(135deg, hsl(142 69% 48% / 0.9), hsl(142.1 60% 30% / 0.95), hsl(125 65% 25% / 0.8));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(142.1 20% 98%));
     --gradient-warm: linear-gradient(135deg, hsl(142.1 60% 50%), hsl(150 60% 60%));
+    
+    /* Section Borders */
+    --section-border-primary: linear-gradient(90deg, transparent, hsl(142.1 71.8% 29.2%), transparent);
+    --section-border-secondary: linear-gradient(90deg, transparent, hsl(150 60% 60%), transparent);
+    --section-border-accent: linear-gradient(90deg, transparent, hsl(200 70% 45%), transparent);
 
     /* Clean Shadows */
     --shadow-soft: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -164,6 +169,28 @@ All colors MUST be HSL.
 
   .warm-glow:hover {
     box-shadow: var(--shadow-glow);
+  }
+
+  .section-border-top {
+    position: relative;
+  }
+
+  .section-border-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--section-border-primary);
+  }
+
+  .section-border-secondary::before {
+    background: var(--section-border-secondary);
+  }
+
+  .section-border-accent::before {
+    background: var(--section-border-accent);
   }
 }
 

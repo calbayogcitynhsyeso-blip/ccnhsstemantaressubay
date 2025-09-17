@@ -200,6 +200,22 @@ export function ActivityLogger() {
           );
         })}
       </div>
+
+      {/* Submit Button */}
+      {Object.keys(selectedActivities).length > 0 && (
+        <div className="mt-8 text-center">
+          <Button 
+            size="lg"
+            className="bg-success hover:bg-success/90 text-success-foreground px-8 py-3 text-lg font-semibold rounded-full"
+            onClick={() => {
+              // TODO: Save activities to database
+              alert(`Activities saved! Total carbon: ${totalCarbon.toFixed(2)} kg CO₂`);
+            }}
+          >
+            Submit Activities
+          </Button>
+        </div>
+      )}
     </section>
   );
 }

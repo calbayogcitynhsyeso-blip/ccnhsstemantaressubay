@@ -67,7 +67,7 @@ export function Hero() {
             <Button 
               size="lg" 
               onClick={() => navigate("/auth")}
-              className="bg-accent hover:bg-accent/90 text-accent-foreground px-8 py-4 text-lg font-semibold rounded-full warm-glow hover-lift transition-all duration-300"
+              className="bg-white hover:bg-white/90 text-primary px-8 py-4 text-lg font-semibold rounded-full warm-glow hover-lift transition-all duration-300"
             >
               Start Tracking Now
             </Button>
