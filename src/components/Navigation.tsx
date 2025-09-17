@@ -10,6 +10,7 @@ export function Navigation() {
   const navItems = [
     { name: "Home", href: "#home", icon: Home },
     { name: "Track", href: "#track", icon: BarChart3 },
+    { name: "History", href: "#history", icon: BarChart3 },
     { name: "Achievements", href: "#achievements", icon: Trophy },
     { name: "Leaderboard", href: "#leaderboard", icon: Crown },
     { name: "About", href: "#about", icon: Info },

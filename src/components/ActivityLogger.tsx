@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Car, Zap, UtensilsCrossed, Trash2, Plus, TrendingUp, Edit3 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface Activity {
   id: string;
@@ -55,6 +57,26 @@ export function ActivityLogger() {
   const [selectedActivities, setSelectedActivities] = useState<{[key: string]: number}>({});
   const [activeCategory, setActiveCategory] = useState<string>('transport');
   const [editingActivity, setEditingActivity] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    // Get current user
+    const getCurrentUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+
+    getCurrentUser();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const totalCarbon = Object.entries(selectedActivities).reduce((total, [activityId, quantity]) => {
     const activity = activities.find(a => a.id === activityId);
@@ -76,6 +98,61 @@ export function ActivityLogger() {
   };
 
   const filteredActivities = activities.filter(a => a.category === activeCategory);
+
+  const handleSubmitActivities = async () => {
+    if (!user) {
+      toast({
+        title: "Please log in",
+        description: "You need to be logged in to save activities.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (Object.keys(selectedActivities).length === 0) {
+      toast({
+        title: "No activities to save",
+        description: "Please select some activities before submitting.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSaving(true);
+
+    try {
+      const { error } = await supabase
+        .from('activity_logs')
+        .upsert({
+          user_id: user.id,
+          log_date: new Date().toISOString().split('T')[0], // Today's date
+          activities: selectedActivities,
+          total_carbon: totalCarbon,
+        }, {
+          onConflict: 'user_id,log_date'
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Activities saved!",
+        description: `Your carbon footprint of ${totalCarbon.toFixed(2)} kg CO₂ has been recorded.`,
+      });
+
+      // Reset form
+      setSelectedActivities({});
+
+    } catch (error: any) {
+      console.error('Error saving activities:', error);
+      toast({
+        title: "Error saving activities",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -207,13 +284,16 @@ export function ActivityLogger() {
           <Button 
             size="lg"
             className="bg-success hover:bg-success/90 text-success-foreground px-8 py-3 text-lg font-semibold rounded-full"
-            onClick={() => {
-              // TODO: Save activities to database
-              alert(`Activities saved! Total carbon: ${totalCarbon.toFixed(2)} kg CO₂`);
-            }}
+            onClick={handleSubmitActivities}
+            disabled={saving || !user}
           >
-            Submit Activities
+            {saving ? "Saving..." : "Submit Activities"}
           </Button>
+          {!user && (
+            <p className="text-muted-foreground text-sm mt-2">
+              Please log in to save your activities
+            </p>
+          )}
         </div>
       )}
     </section>

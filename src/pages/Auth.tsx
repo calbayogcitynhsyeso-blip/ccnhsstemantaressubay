@@ -15,6 +15,8 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [grade, setGrade] = useState("");
+  const [section, setSection] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -52,7 +54,9 @@ export default function Auth() {
         options: {
           emailRedirectTo: redirectUrl,
           data: {
-            name: name,
+            display_name: name,
+            grade: grade,
+            section: section,
           }
         }
       });
@@ -191,6 +195,33 @@ export default function Auth() {
                       required
                       className="transition-all focus:warm-glow"
                     />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="grade">Grade</Label>
+                      <Input
+                        id="grade"
+                        type="text"
+                        placeholder="Grade 10"
+                        value={grade}
+                        onChange={(e) => setGrade(e.target.value)}
+                        required
+                        className="transition-all focus:warm-glow"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="section">Section</Label>
+                      <Input
+                        id="section"
+                        type="text"
+                        placeholder="Section A"
+                        value={section}
+                        onChange={(e) => setSection(e.target.value)}
+                        required
+                        className="transition-all focus:warm-glow"
+                      />
+                    </div>
                   </div>
 
                   <div className="space-y-2">
