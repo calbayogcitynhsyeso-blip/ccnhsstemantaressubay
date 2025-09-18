@@ -46,17 +46,17 @@ export function Hero() {
           {/* Feature Highlights */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
             <div className="bg-card/10 backdrop-blur-sm rounded-2xl p-6 border border-primary-foreground/20">
-              <TrendingDown className="w-8 h-8 text-green-400 mx-auto mb-3" />
+              <TrendingDown className="w-8 h-8 text-white mx-auto mb-3" />
               <h3 className="text-lg font-semibold text-primary-foreground mb-2">Track Impact</h3>
               <p className="text-primary-foreground/80 text-sm">Log daily activities and see your carbon footprint in real-time</p>
             </div>
             <div className="bg-card/10 backdrop-blur-sm rounded-2xl p-6 border border-primary-foreground/20">
-              <Users className="w-8 h-8 text-green-400 mx-auto mb-3" />
+              <Users className="w-8 h-8 text-white mx-auto mb-3" />
               <h3 className="text-lg font-semibold text-primary-foreground mb-2">Community</h3>
               <p className="text-primary-foreground/80 text-sm">Compare with classmates and compete for sustainability goals</p>
             </div>
             <div className="bg-card/10 backdrop-blur-sm rounded-2xl p-6 border border-primary-foreground/20">
-              <Award className="w-8 h-8 text-green-400 mx-auto mb-3" />
+              <Award className="w-8 h-8 text-white mx-auto mb-3" />
               <h3 className="text-lg font-semibold text-primary-foreground mb-2">Achievements</h3>
               <p className="text-primary-foreground/80 text-sm">Earn badges and rewards for eco-friendly actions</p>
             </div>
