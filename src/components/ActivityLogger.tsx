@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Car, Zap, UtensilsCrossed, Trash2, Plus, TrendingUp, Edit3 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
 
 interface Activity {
   id: string;
@@ -91,9 +92,26 @@ export function ActivityLogger() {
   };
 
   const setActivityValue = (activityId: string, value: number) => {
+    // Validate input with Zod schema
+    const activityQuantitySchema = z.number()
+      .min(0, "Quantity cannot be negative")
+      .max(1000, "Please enter a realistic value (max 1000)")
+      .finite("Invalid number");
+
+    const validation = activityQuantitySchema.safeParse(value);
+    
+    if (!validation.success) {
+      toast({
+        title: "Invalid quantity",
+        description: validation.error.errors[0].message,
+        variant: "destructive"
+      });
+      return;
+    }
+
     setSelectedActivities(prev => ({
       ...prev,
-      [activityId]: Math.max(0, value)
+      [activityId]: validation.data
     }));
   };
 
@@ -242,6 +260,7 @@ export function ActivityLogger() {
                       <Input
                         type="number"
                         min="0"
+                        max="1000"
                         step="0.1"
                         value={quantity}
                         onChange={(e) => setActivityValue(activity.id, parseFloat(e.target.value) || 0)}
