@@ -103,7 +103,18 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      leaderboard_stats: {
+        Row: {
+          avg_carbon_score: number | null
+          display_name: string | null
+          grade: string | null
+          last_activity_date: string | null
+          section: string | null
+          streak_days: number | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
