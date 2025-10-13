@@ -1,11 +1,33 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Home, BarChart3, Trophy, Crown, Info } from "lucide-react";
+import { Menu, Home, BarChart3, Trophy, Crown, Info, LogOut } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import yesoLogo from "@/assets/yes-o-logo-cropped.png";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({
+        title: "Error signing out",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Signed out successfully",
+        description: "See you next time!",
+      });
+      navigate("/");
+    }
+  };
 
   const navItems = [
     { name: "Home", href: "#home", icon: Home },
@@ -50,6 +72,15 @@ export function Navigation() {
                 <span>{item.name}</span>
               </button>
             ))}
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={handleLogout}
+              className="text-muted-foreground hover:text-destructive transition-colors duration-200"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
           </div>
 
           {/* Mobile Navigation */}
@@ -81,6 +112,15 @@ export function Navigation() {
                       <span className="text-lg">{item.name}</span>
                     </button>
                   ))}
+                  
+                  <Button 
+                    variant="ghost" 
+                    onClick={handleLogout}
+                    className="flex items-center space-x-3 text-left p-3 rounded-lg hover:bg-destructive/10 text-destructive w-full justify-start"
+                  >
+                    <LogOut className="w-5 h-5" />
+                    <span className="text-lg">Logout</span>
+                  </Button>
                 </div>
               </SheetContent>
             </Sheet>

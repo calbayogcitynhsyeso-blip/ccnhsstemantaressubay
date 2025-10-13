@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Medal, Award, TrendingDown, Users } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface LeaderboardEntry {
   rank: number;
@@ -12,19 +14,126 @@ interface LeaderboardEntry {
   badge?: string;
 }
 
-// Mock leaderboard data
-const leaderboardData: LeaderboardEntry[] = [
-  { rank: 1, name: "Maria Santos", class: "Grade 10-A", carbonScore: 2.1, streak: 15, badge: "Eco Champion" },
-  { rank: 2, name: "Juan Dela Cruz", class: "Grade 11-B", carbonScore: 2.4, streak: 12, badge: "Green Warrior" },
-  { rank: 3, name: "Anna Reyes", class: "Grade 10-C", carbonScore: 2.7, streak: 8, badge: "Nature Friend" },
-  { rank: 4, name: "Carlos Mendoza", class: "Grade 9-A", carbonScore: 3.1, streak: 10 },
-  { rank: 5, name: "Sofia Garcia", class: "Grade 11-A", carbonScore: 3.5, streak: 6 },
-  { rank: 6, name: "Miguel Torres", class: "Grade 10-B", carbonScore: 3.8, streak: 5 },
-  { rank: 7, name: "Isabella Cruz", class: "Grade 9-C", carbonScore: 4.2, streak: 7 },
-  { rank: 8, name: "Diego Ramos", class: "Grade 11-C", carbonScore: 4.6, streak: 4 },
-];
-
 export function Leaderboard() {
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchLeaderboard = async () => {
+    try {
+      setIsLoading(true);
+      
+      // Fetch all profiles with their activity logs
+      const { data: profiles, error: profilesError } = await supabase
+        .from('profiles')
+        .select('user_id, display_name, grade, section');
+
+      if (profilesError) throw profilesError;
+
+      if (!profiles || profiles.length === 0) {
+        setLeaderboardData([]);
+        return;
+      }
+
+      // Fetch activity logs for all users
+      const { data: activityLogs, error: logsError } = await supabase
+        .from('activity_logs')
+        .select('user_id, total_carbon, log_date');
+
+      if (logsError) throw logsError;
+
+      // Calculate average carbon score and streak for each user
+      const userStats = profiles.map(profile => {
+        const userLogs = activityLogs?.filter(log => log.user_id === profile.user_id) || [];
+        
+        if (userLogs.length === 0) {
+          return null;
+        }
+
+        // Calculate average carbon score
+        const totalCarbon = userLogs.reduce((sum, log) => sum + Number(log.total_carbon), 0);
+        const averageCarbon = totalCarbon / userLogs.length;
+
+        // Calculate streak (consecutive days with logs)
+        const sortedDates = userLogs
+          .map(log => new Date(log.log_date))
+          .sort((a, b) => b.getTime() - a.getTime());
+        
+        let streak = 0;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        for (let i = 0; i < sortedDates.length; i++) {
+          const logDate = new Date(sortedDates[i]);
+          logDate.setHours(0, 0, 0, 0);
+          const expectedDate = new Date(today);
+          expectedDate.setDate(expectedDate.getDate() - i);
+          
+          if (logDate.getTime() === expectedDate.getTime()) {
+            streak++;
+          } else {
+            break;
+          }
+        }
+
+        return {
+          name: profile.display_name,
+          class: `${profile.grade} - ${profile.section}`,
+          carbonScore: Number(averageCarbon.toFixed(1)),
+          streak,
+          userId: profile.user_id,
+        };
+      }).filter(stat => stat !== null) as Array<{
+        name: string;
+        class: string;
+        carbonScore: number;
+        streak: number;
+        userId: string;
+      }>;
+
+      // Sort by carbon score (lower is better)
+      const sortedStats = userStats.sort((a, b) => a.carbonScore - b.carbonScore);
+
+      // Assign ranks and badges
+      const leaderboard: LeaderboardEntry[] = sortedStats.map((stat, index) => ({
+        rank: index + 1,
+        name: stat.name,
+        class: stat.class,
+        carbonScore: stat.carbonScore,
+        streak: stat.streak,
+        badge: index === 0 ? "Eco Champion" : index === 1 ? "Green Warrior" : index === 2 ? "Nature Friend" : undefined,
+      }));
+
+      setLeaderboardData(leaderboard);
+    } catch (error) {
+      console.error('Error fetching leaderboard:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchLeaderboard();
+
+    // Subscribe to real-time updates on activity_logs
+    const channel = supabase
+      .channel('leaderboard-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'activity_logs'
+        },
+        () => {
+          fetchLeaderboard();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
   const getRankIcon = (rank: number) => {
     switch (rank) {
       case 1:
@@ -45,8 +154,18 @@ export function Leaderboard() {
     return {};
   };
 
+  if (isLoading) {
+    return (
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="text-center">
+          <p className="text-muted-foreground">Loading leaderboard...</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="leaderboard" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
           Leaderboard

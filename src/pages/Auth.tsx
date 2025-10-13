@@ -48,7 +48,7 @@ export default function Auth() {
     try {
       const redirectUrl = `${window.location.origin}/dashboard`;
       
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -63,9 +63,25 @@ export default function Auth() {
 
       if (error) throw error;
 
+      // Create profile in profiles table
+      if (data.user) {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .insert({
+            user_id: data.user.id,
+            display_name: name,
+            grade: grade,
+            section: section,
+          });
+
+        if (profileError) {
+          console.error('Error creating profile:', profileError);
+        }
+      }
+
       toast({
         title: "Account created successfully!",
-        description: "Please check your email to verify your account.",
+        description: "You can now sign in to your account.",
       });
     } catch (error: any) {
       toast({
