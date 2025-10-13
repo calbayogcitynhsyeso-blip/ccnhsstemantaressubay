@@ -143,10 +143,14 @@ export function ActivityLogger() {
       setSelectedActivities({});
 
     } catch (error: any) {
-      console.error('Error saving activities:', error);
+      // Log minimal info for debugging in development only
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Activity save error code:', error?.code);
+      }
+      
       toast({
         title: "Error saving activities",
-        description: error.message,
+        description: "Unable to save your activities. Please try again.",
         variant: "destructive",
       });
     } finally {

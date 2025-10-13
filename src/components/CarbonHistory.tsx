@@ -40,8 +40,11 @@ export function CarbonHistory({ user }: CarbonHistoryProps) {
         ...log,
         activities: log.activities as Record<string, number>
       })));
-    } catch (error) {
-      console.error('Error fetching history:', error);
+    } catch (error: any) {
+      // Log minimal info for debugging in development only
+      if (process.env.NODE_ENV === 'development') {
+        console.error('History fetch error code:', error?.code);
+      }
     } finally {
       setLoading(false);
     }

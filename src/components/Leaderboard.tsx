@@ -104,8 +104,11 @@ export function Leaderboard() {
       }));
 
       setLeaderboardData(leaderboard);
-    } catch (error) {
-      console.error('Error fetching leaderboard:', error);
+    } catch (error: any) {
+      // Log minimal info for debugging in development only
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Leaderboard fetch error code:', error?.code);
+      }
     } finally {
       setIsLoading(false);
     }

@@ -9,6 +9,26 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Leaf, Mail, Lock, User } from "lucide-react";
 import yesoLogo from "@/assets/yes-o-logo-cropped.png";
+import { z } from "zod";
+
+const signUpSchema = z.object({
+  name: z.string()
+    .trim()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters")
+    .regex(/^[a-zA-Z\s\-']+$/, "Name can only contain letters, spaces, hyphens, and apostrophes"),
+  grade: z.string()
+    .trim()
+    .regex(/^(Grade\s)?(7|8|9|10|11|12)$/, "Grade must be 7-12")
+    .transform(val => val.replace(/^Grade\s/i, 'Grade ')),
+  section: z.string()
+    .trim()
+    .min(1, "Section is required")
+    .max(20, "Section must be less than 20 characters")
+    .regex(/^[A-Za-z0-9\s\-]+$/, "Section can only contain letters, numbers, spaces, and hyphens"),
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters")
+});
 
 export default function Auth() {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,17 +66,30 @@ export default function Auth() {
     setIsLoading(true);
 
     try {
+      // Validate input
+      const validation = signUpSchema.safeParse({ name, grade, section, email, password });
+      if (!validation.success) {
+        toast({
+          title: "Validation Error",
+          description: validation.error.errors[0].message,
+          variant: "destructive"
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      const validatedData = validation.data;
       const redirectUrl = `${window.location.origin}/dashboard`;
       
       const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
+        email: validatedData.email,
+        password: validatedData.password,
         options: {
           emailRedirectTo: redirectUrl,
           data: {
-            display_name: name,
-            grade: grade,
-            section: section,
+            display_name: validatedData.name,
+            grade: validatedData.grade,
+            section: validatedData.section,
           }
         }
       });
@@ -69,13 +102,23 @@ export default function Auth() {
           .from('profiles')
           .insert({
             user_id: data.user.id,
-            display_name: name,
-            grade: grade,
-            section: section,
+            display_name: validatedData.name,
+            grade: validatedData.grade,
+            section: validatedData.section,
           });
 
         if (profileError) {
-          console.error('Error creating profile:', profileError);
+          // Log minimal info for debugging in development only
+          if (process.env.NODE_ENV === 'development') {
+            console.error('Profile creation error code:', profileError.code);
+          }
+          
+          toast({
+            title: "Profile Creation Failed",
+            description: "Unable to complete registration. Please try again.",
+            variant: "destructive",
+          });
+          return;
         }
       }
 
@@ -86,7 +129,7 @@ export default function Auth() {
     } catch (error: any) {
       toast({
         title: "Error creating account",
-        description: error.message,
+        description: error.message || "Unable to create account. Please try again.",
         variant: "destructive",
       });
     } finally {
