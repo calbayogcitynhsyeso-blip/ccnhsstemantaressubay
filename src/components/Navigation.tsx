@@ -51,13 +51,12 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center">
             <img 
               src={yesoLogo} 
               alt="YES-O Logo" 
               className="w-10 h-10 object-contain"
             />
-            <span className="text-xl font-bold text-primary">EcoPulse</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -93,13 +92,12 @@ export function Navigation() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <div className="flex flex-col space-y-6 mt-8">
-                  <div className="flex items-center space-x-3 pb-6 border-b border-border">
+                  <div className="flex items-center pb-6 border-b border-border">
                     <img 
                       src={yesoLogo} 
                       alt="YES-O Logo" 
                       className="w-10 h-10 object-contain"
                     />
-                    <span className="text-xl font-bold text-primary">EcoPulse</span>
                   </div>
                   
                   {navItems.map((item) => (
