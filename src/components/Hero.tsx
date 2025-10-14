@@ -8,7 +8,7 @@ export function Hero() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{background: 'var(--gradient-hero)'}}>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16" style={{background: 'var(--gradient-hero)'}}>
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img 
