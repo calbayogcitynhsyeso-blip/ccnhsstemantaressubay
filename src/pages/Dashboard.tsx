@@ -80,7 +80,7 @@ export default function Dashboard() {
         
         <section id="achievements" className="section-border-top section-border-secondary relative">
           <div className="absolute top-20 left-16 w-20 h-20 bg-accent/15 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }} />
-          <Achievements />
+          <Achievements user={user} />
         </section>
         
         <section id="leaderboard" className="section-border-top section-border-accent relative">

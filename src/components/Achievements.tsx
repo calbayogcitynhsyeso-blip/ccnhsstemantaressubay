@@ -1,7 +1,10 @@
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Trophy, Star, Leaf, Recycle, Users, Target, Award, Lock } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { User } from "@supabase/supabase-js";
 
 interface Achievement {
   id: string;
@@ -90,9 +93,64 @@ const categoryConfig = {
   milestone: { name: 'Milestone', color: 'bg-accent/10 text-accent' }
 };
 
-export function Achievements() {
-  const unlockedCount = achievements.filter(a => a.unlocked).length;
-  const totalCount = achievements.length;
+interface AchievementsProps {
+  user?: User;
+}
+
+export function Achievements({ user }: AchievementsProps) {
+  const [userAchievements, setUserAchievements] = useState<Achievement[]>(achievements);
+  const [loading, setLoading] = useState(!!user);
+
+  useEffect(() => {
+    if (!user) {
+      // Show static preview for unauthenticated users
+      setLoading(false);
+      return;
+    }
+
+    const fetchUserAchievements = async () => {
+      try {
+        const { data: unlockedAchievements, error } = await supabase
+          .from('user_achievements')
+          .select('achievement_id, unlocked_at')
+          .eq('user_id', user.id);
+
+        if (error) throw error;
+
+        // Merge database data with static achievement definitions
+        const unlockedIds = new Set(unlockedAchievements?.map(a => a.achievement_id) || []);
+        
+        const updatedAchievements = achievements.map(achievement => ({
+          ...achievement,
+          unlocked: unlockedIds.has(achievement.id),
+          progress: unlockedIds.has(achievement.id) ? achievement.maxProgress : 0
+        }));
+
+        setUserAchievements(updatedAchievements);
+      } catch (error) {
+        console.error('Error fetching achievements:', error);
+        setUserAchievements(achievements);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserAchievements();
+  }, [user]);
+
+  const unlockedCount = userAchievements.filter(a => a.unlocked).length;
+  const totalCount = userAchievements.length;
+
+  if (loading) {
+    return (
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading achievements...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -125,7 +183,7 @@ export function Achievements() {
       {/* Achievement Categories */}
       <div className="space-y-12">
         {Object.entries(categoryConfig).map(([categoryKey, categoryInfo]) => {
-          const categoryAchievements = achievements.filter(a => a.category === categoryKey);
+          const categoryAchievements = userAchievements.filter(a => a.category === categoryKey);
           
           return (
             <div key={categoryKey}>
