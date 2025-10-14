@@ -96,32 +96,6 @@ export default function Auth() {
 
       if (error) throw error;
 
-      // Create profile in profiles table
-      if (data.user) {
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert({
-            user_id: data.user.id,
-            display_name: validatedData.name,
-            grade: validatedData.grade,
-            section: validatedData.section,
-          });
-
-        if (profileError) {
-          // Log minimal info for debugging in development only
-          if (process.env.NODE_ENV === 'development') {
-            console.error('Profile creation error code:', profileError.code);
-          }
-          
-          toast({
-            title: "Profile Creation Failed",
-            description: "Unable to complete registration. Please try again.",
-            variant: "destructive",
-          });
-          return;
-        }
-      }
-
       toast({
         title: "Account created successfully!",
         description: "You can now sign in to your account.",
