@@ -37,6 +37,11 @@ export default function Auth() {
   const [name, setName] = useState("");
   const [grade, setGrade] = useState("");
   const [section, setSection] = useState("");
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [isResettingPassword, setIsResettingPassword] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -51,9 +56,17 @@ export default function Auth() {
     
     checkSession();
 
+    // Check for password recovery token in URL
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const type = hashParams.get('type');
+    
+    if (type === 'recovery') {
+      setIsResettingPassword(true);
+    }
+
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session) {
+      if (session && !isResettingPassword) {
         navigate("/dashboard");
       }
     });
@@ -138,6 +151,87 @@ export default function Auth() {
     }
   };
 
+  const handlePasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const redirectUrl = `${window.location.origin}/auth`;
+      
+      const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+        redirectTo: redirectUrl,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Password reset email sent!",
+        description: "Check your inbox for a link to reset your password.",
+      });
+      
+      setShowForgotPassword(false);
+      setResetEmail("");
+    } catch (error: any) {
+      toast({
+        title: "Error sending reset email",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleUpdatePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (newPassword !== confirmPassword) {
+      toast({
+        title: "Passwords don't match",
+        description: "Please make sure both passwords are the same.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      toast({
+        title: "Password too short",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Password updated successfully!",
+        description: "You can now sign in with your new password.",
+      });
+      
+      setIsResettingPassword(false);
+      setNewPassword("");
+      setConfirmPassword("");
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast({
+        title: "Error updating password",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
       <div className="w-full max-w-md animate-fade-in">
@@ -157,12 +251,103 @@ export default function Auth() {
 
         <Card className="bg-white/95 backdrop-blur-sm border-0 warm-glow animate-scale-in">
           <CardHeader className="text-center pb-4">
-            <CardTitle className="text-2xl font-semibold text-foreground">Get Started</CardTitle>
-            <CardDescription>Sign in to your account or create a new one</CardDescription>
+            <CardTitle className="text-2xl font-semibold text-foreground">
+              {isResettingPassword ? "Set New Password" : showForgotPassword ? "Reset Password" : "Get Started"}
+            </CardTitle>
+            <CardDescription>
+              {isResettingPassword 
+                ? "Enter your new password below" 
+                : showForgotPassword 
+                  ? "Enter your email to receive a password reset link" 
+                  : "Sign in to your account or create a new one"}
+            </CardDescription>
           </CardHeader>
           
           <CardContent>
-            <Tabs defaultValue="signin" className="w-full">
+            {isResettingPassword ? (
+              <form onSubmit={handleUpdatePassword} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="new-password" className="flex items-center gap-2">
+                    <Lock className="w-4 h-4" />
+                    New Password
+                  </Label>
+                  <Input
+                    id="new-password"
+                    type="password"
+                    placeholder="Enter new password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                    minLength={6}
+                    className="transition-all focus:warm-glow"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="confirm-password" className="flex items-center gap-2">
+                    <Lock className="w-4 h-4" />
+                    Confirm New Password
+                  </Label>
+                  <Input
+                    id="confirm-password"
+                    type="password"
+                    placeholder="Confirm new password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                    minLength={6}
+                    className="transition-all focus:warm-glow"
+                  />
+                </div>
+
+                <Button 
+                  type="submit" 
+                  className="w-full bg-primary hover:bg-primary/90 warm-glow hover-lift transition-all"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Updating password..." : "Update Password"}
+                </Button>
+              </form>
+            ) : showForgotPassword ? (
+              <form onSubmit={handlePasswordReset} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="reset-email" className="flex items-center gap-2">
+                    <Mail className="w-4 h-4" />
+                    Email
+                  </Label>
+                  <Input
+                    id="reset-email"
+                    type="email"
+                    placeholder="your.email@example.com"
+                    value={resetEmail}
+                    onChange={(e) => setResetEmail(e.target.value)}
+                    required
+                    className="transition-all focus:warm-glow"
+                  />
+                </div>
+
+                <Button 
+                  type="submit" 
+                  className="w-full bg-primary hover:bg-primary/90 warm-glow hover-lift transition-all"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Sending reset link..." : "Send Reset Link"}
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="w-full"
+                  onClick={() => {
+                    setShowForgotPassword(false);
+                    setResetEmail("");
+                  }}
+                >
+                  Back to Sign In
+                </Button>
+              </form>
+            ) : (
+              <Tabs defaultValue="signin" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-6">
                 <TabsTrigger value="signin" className="transition-all">Sign In</TabsTrigger>
                 <TabsTrigger value="signup" className="transition-all">Sign Up</TabsTrigger>
@@ -187,10 +372,19 @@ export default function Auth() {
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="signin-password" className="flex items-center gap-2">
-                      <Lock className="w-4 h-4" />
-                      Password
-                    </Label>
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="signin-password" className="flex items-center gap-2">
+                        <Lock className="w-4 h-4" />
+                        Password
+                      </Label>
+                      <button
+                        type="button"
+                        onClick={() => setShowForgotPassword(true)}
+                        className="text-xs text-primary hover:text-primary/80 transition-colors"
+                      >
+                        Forgot Password?
+                      </button>
+                    </div>
                     <Input
                       id="signin-password"
                       type="password"
@@ -298,6 +492,7 @@ export default function Auth() {
                 </form>
               </TabsContent>
             </Tabs>
+            )}
 
             <div className="mt-6 text-center">
               <Button 
