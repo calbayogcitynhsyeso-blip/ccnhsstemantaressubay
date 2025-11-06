@@ -16,6 +16,16 @@ const signUpSchema = z.object({
     .trim()
     .min(2, "Username must be at least 2 characters")
     .max(100, "Username must be less than 100 characters"),
+  grade: z.string()
+    .trim()
+    .optional()
+    .default("")
+    .transform(val => val || ""),
+  section: z.string()
+    .trim()
+    .optional()
+    .default("")
+    .transform(val => val || ""),
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters")
 });
@@ -25,6 +35,8 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [grade, setGrade] = useState("");
+  const [section, setSection] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -55,7 +67,7 @@ export default function Auth() {
 
     try {
       // Validate input
-      const validation = signUpSchema.safeParse({ name, email, password });
+      const validation = signUpSchema.safeParse({ name, grade, section, email, password });
       if (!validation.success) {
         toast({
           title: "Validation Error",
@@ -76,6 +88,8 @@ export default function Auth() {
           emailRedirectTo: redirectUrl,
           data: {
             display_name: validatedData.name,
+            grade: validatedData.grade,
+            section: validatedData.section,
           }
         }
       });
@@ -214,6 +228,31 @@ export default function Auth() {
                       required
                       className="transition-all focus:warm-glow"
                     />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="grade">Grade (Optional)</Label>
+                      <Input
+                        id="grade"
+                        type="text"
+                        placeholder="e.g., Grade 10"
+                        value={grade}
+                        onChange={(e) => setGrade(e.target.value)}
+                        className="transition-all focus:warm-glow"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="section">Section (Optional)</Label>
+                      <Input
+                        id="section"
+                        type="text"
+                        placeholder="e.g., Section A"
+                        value={section}
+                        onChange={(e) => setSection(e.target.value)}
+                        className="transition-all focus:warm-glow"
+                      />
+                    </div>
                   </div>
 
                   <div className="space-y-2">
