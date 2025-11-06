@@ -14,18 +14,8 @@ import { z } from "zod";
 const signUpSchema = z.object({
   name: z.string()
     .trim()
-    .min(2, "Name must be at least 2 characters")
-    .max(100, "Name must be less than 100 characters")
-    .regex(/^[a-zA-Z\s\-']+$/, "Name can only contain letters, spaces, hyphens, and apostrophes"),
-  grade: z.string()
-    .trim()
-    .regex(/^(Grade\s)?(7|8|9|10|11|12)$/, "Grade must be 7-12")
-    .transform(val => val.replace(/^Grade\s/i, 'Grade ')),
-  section: z.string()
-    .trim()
-    .min(1, "Section is required")
-    .max(20, "Section must be less than 20 characters")
-    .regex(/^[A-Za-z0-9\s\-]+$/, "Section can only contain letters, numbers, spaces, and hyphens"),
+    .min(2, "Username must be at least 2 characters")
+    .max(100, "Username must be less than 100 characters"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters")
 });
@@ -35,8 +25,6 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [grade, setGrade] = useState("");
-  const [section, setSection] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -67,7 +55,7 @@ export default function Auth() {
 
     try {
       // Validate input
-      const validation = signUpSchema.safeParse({ name, grade, section, email, password });
+      const validation = signUpSchema.safeParse({ name, email, password });
       if (!validation.success) {
         toast({
           title: "Validation Error",
@@ -88,8 +76,6 @@ export default function Auth() {
           emailRedirectTo: redirectUrl,
           data: {
             display_name: validatedData.name,
-            grade: validatedData.grade,
-            section: validatedData.section,
           }
         }
       });
@@ -217,44 +203,17 @@ export default function Auth() {
                   <div className="space-y-2">
                     <Label htmlFor="signup-name" className="flex items-center gap-2">
                       <User className="w-4 h-4" />
-                      Full Name
+                      Username
                     </Label>
                     <Input
                       id="signup-name"
                       type="text"
-                      placeholder="Your full name"
+                      placeholder="Choose a username"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       required
                       className="transition-all focus:warm-glow"
                     />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="grade">Grade</Label>
-                      <Input
-                        id="grade"
-                        type="text"
-                        placeholder="Grade 10"
-                        value={grade}
-                        onChange={(e) => setGrade(e.target.value)}
-                        required
-                        className="transition-all focus:warm-glow"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="section">Section</Label>
-                      <Input
-                        id="section"
-                        type="text"
-                        placeholder="Section A"
-                        value={section}
-                        onChange={(e) => setSection(e.target.value)}
-                        required
-                        className="transition-all focus:warm-glow"
-                      />
-                    </div>
                   </div>
 
                   <div className="space-y-2">
@@ -265,7 +224,7 @@ export default function Auth() {
                     <Input
                       id="signup-email"
                       type="email"
-                      placeholder="your.email@ccnhs.edu"
+                      placeholder="your.email@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
