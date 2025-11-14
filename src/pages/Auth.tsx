@@ -46,6 +46,15 @@ export default function Auth() {
   const { toast } = useToast();
 
   useEffect(() => {
+    // Check for password recovery token in URL first
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const type = hashParams.get('type');
+    
+    if (type === 'recovery') {
+      setIsResettingPassword(true);
+      return; // Don't redirect if in password recovery mode
+    }
+
     // Check if user is already logged in
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -56,17 +65,9 @@ export default function Auth() {
     
     checkSession();
 
-    // Check for password recovery token in URL
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const type = hashParams.get('type');
-    
-    if (type === 'recovery') {
-      setIsResettingPassword(true);
-    }
-
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session && !isResettingPassword) {
+      if (session && type !== 'recovery') {
         navigate("/dashboard");
       }
     });
