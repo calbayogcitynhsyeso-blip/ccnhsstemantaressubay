@@ -112,7 +112,7 @@ export default function Auth() {
 
       toast({
         title: "Account created successfully!",
-        description: "You can now sign in to your account.",
+        description: "Please check your email and confirm your account before signing in.",
       });
     } catch (error: any) {
       toast({
