@@ -3,10 +3,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Car, Zap, UtensilsCrossed, Trash2, Plus, TrendingUp, Edit3 } from "lucide-react";
+import { Car, Zap, UtensilsCrossed, Trash2, Plus, TrendingUp, Edit3, Star, Leaf, Recycle, Trophy } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
+import { CertificateModal } from "./CertificateModal";
+import { useAchievementChecker } from "@/hooks/use-achievement-checker";
 
 interface Activity {
   id: string;
@@ -54,19 +56,62 @@ const categoryConfig = {
   waste: { icon: Trash2, color: 'bg-secondary', name: 'Waste' }
 };
 
+// Achievement definitions for checking
+const achievementDefinitions = [
+  {
+    id: 'first-log',
+    name: 'First Steps',
+    description: 'Log your first activity',
+    icon: Star,
+    color: 'hsl(45 90% 60%)',
+    checkCondition: (data: any) => data.activityCount >= 1
+  },
+  {
+    id: 'recycling-hero',
+    name: 'Recycling Hero',
+    description: 'Complete 10 recycling activities',
+    icon: Recycle,
+    color: 'hsl(200 70% 45%)',
+    checkCondition: (data: any) => data.recyclingCount >= 10
+  },
+  {
+    id: 'low-carbon',
+    name: 'Low Carbon Champion',
+    description: 'Keep daily footprint under 3kg CO₂ for a week',
+    icon: Trophy,
+    color: 'hsl(45 90% 50%)',
+    checkCondition: (data: any) => data.lowCarbonDays >= 7
+  }
+];
+
 export function ActivityLogger() {
   const [selectedActivities, setSelectedActivities] = useState<{[key: string]: number}>({});
   const [activeCategory, setActiveCategory] = useState<string>('transport');
   const [editingActivity, setEditingActivity] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [userName, setUserName] = useState<string>('');
   const { toast } = useToast();
+  const { newAchievement, checkAndUnlockAchievements, clearAchievement } = useAchievementChecker();
 
   useEffect(() => {
-    // Get current user
+    // Get current user and profile
     const getCurrentUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
+
+      if (user) {
+        // Get user's profile for display name
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('display_name')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (profile) {
+          setUserName(profile.display_name);
+        }
+      }
     };
 
     getCurrentUser();
@@ -115,6 +160,48 @@ export function ActivityLogger() {
     }));
   };
 
+  const checkAchievements = async (userId: string, carbonScore: number) => {
+    try {
+      // Get user's activity history
+      const { data: activityLogs } = await supabase
+        .from('activity_logs')
+        .select('*')
+        .eq('user_id', userId)
+        .order('log_date', { ascending: false });
+
+      if (!activityLogs) return;
+
+      // Calculate achievement data
+      const activityCount = activityLogs.length;
+      const recyclingCount = activityLogs.reduce((sum, log) => {
+        const activities = log.activities as any;
+        return sum + (activities['recycling'] || 0);
+      }, 0);
+      
+      // Count consecutive days with low carbon (< 3kg)
+      let lowCarbonDays = 0;
+      for (const log of activityLogs) {
+        if (log.total_carbon < 3) {
+          lowCarbonDays++;
+        } else {
+          break;
+        }
+      }
+
+      const checkData = {
+        activityCount,
+        recyclingCount,
+        lowCarbonDays,
+        currentCarbon: carbonScore
+      };
+
+      // Check and unlock achievements
+      await checkAndUnlockAchievements(userId, achievementDefinitions, checkData);
+    } catch (error) {
+      console.error('Error checking achievements:', error);
+    }
+  };
+
   const filteredActivities = activities.filter(a => a.category === activeCategory);
 
   const handleSubmitActivities = async () => {
@@ -157,6 +244,9 @@ export function ActivityLogger() {
         description: `Your carbon footprint of ${totalCarbon.toFixed(2)} kg CO₂ has been recorded.`,
       });
 
+      // Check for achievements
+      await checkAchievements(user.id, totalCarbon);
+
       // Reset form
       setSelectedActivities({});
 
@@ -177,7 +267,15 @@ export function ActivityLogger() {
   };
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <>
+      <CertificateModal
+        isOpen={!!newAchievement}
+        onClose={clearAchievement}
+        achievement={newAchievement}
+        userName={userName}
+      />
+      
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
           Log Your Daily Activities
@@ -320,5 +418,6 @@ export function ActivityLogger() {
         </div>
       )}
     </section>
+    </>
   );
 }
