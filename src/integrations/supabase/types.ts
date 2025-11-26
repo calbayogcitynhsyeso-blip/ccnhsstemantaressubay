@@ -117,7 +117,18 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      get_leaderboard_stats: {
+        Args: never
+        Returns: {
+          avg_carbon_score: number
+          display_name: string
+          grade: string
+          last_activity_date: string
+          section: string
+          streak_days: number
+          user_id: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
