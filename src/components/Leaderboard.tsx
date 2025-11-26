@@ -22,10 +22,9 @@ export function Leaderboard() {
     try {
       setIsLoading(true);
       
-      // Fetch from secure leaderboard_stats view
+      // Call the security definer function to get leaderboard stats
       const { data: stats, error } = await supabase
-        .from('leaderboard_stats')
-        .select('*');
+        .rpc('get_leaderboard_stats');
 
       if (error) throw error;
 
