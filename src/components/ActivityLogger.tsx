@@ -22,7 +22,10 @@ const activities: Activity[] = [
   // Transport
   { id: 'walk', category: 'transport', name: 'Walking', carbonValue: 0, unit: 'km' },
   { id: 'bike', category: 'transport', name: 'Bicycle', carbonValue: 0, unit: 'km' },
+  { id: 'pedicab', category: 'transport', name: 'Pedicab (Padyak)', carbonValue: 0, unit: 'km' },
   { id: 'ebike', category: 'transport', name: 'E-bike', carbonValue: 0.02, unit: 'km' },
+  { id: 'tricycle', category: 'transport', name: 'Tricycle (Timbol)', carbonValue: 0.06, unit: 'km' },
+  { id: 'center-car', category: 'transport', name: 'Center Car', carbonValue: 0.08, unit: 'km' },
   { id: 'motorcycle', category: 'transport', name: 'Motorcycle', carbonValue: 0.07, unit: 'km' },
   { id: 'jeepney', category: 'transport', name: 'Jeepney', carbonValue: 0.05, unit: 'km' },
   { id: 'bus', category: 'transport', name: 'Bus', carbonValue: 0.03, unit: 'km' },
@@ -34,19 +37,32 @@ const activities: Activity[] = [
   { id: 'aircon', category: 'electricity', name: 'Air Conditioner', carbonValue: 0.8, unit: 'hours' },
   { id: 'computer', category: 'electricity', name: 'Computer/Laptop', carbonValue: 0.2, unit: 'hours' },
   { id: 'projector', category: 'electricity', name: 'Projector', carbonValue: 0.3, unit: 'hours' },
+  { id: 'tv', category: 'electricity', name: 'TV/Television', carbonValue: 0.15, unit: 'hours' },
+  { id: 'cellphone', category: 'electricity', name: 'Cellphone', carbonValue: 0.01, unit: 'hours' },
+  { id: 'dispenser', category: 'electricity', name: 'Dispenser', carbonValue: 0.12, unit: 'hours' },
+  { id: 'printer', category: 'electricity', name: 'Printer', carbonValue: 0.08, unit: 'hours' },
   
   // Food
-  { id: 'meat-meal', category: 'food', name: 'Meat-based Meal', carbonValue: 2.5, unit: 'meals' },
-  { id: 'vegetarian', category: 'food', name: 'Vegetarian Meal', carbonValue: 0.8, unit: 'meals' },
-  { id: 'fastfood', category: 'food', name: 'Fast Food', carbonValue: 3.2, unit: 'meals' },
-  { id: 'homecooked', category: 'food', name: 'Home-cooked Meal', carbonValue: 1.2, unit: 'meals' },
-  { id: 'canteen', category: 'food', name: 'School Canteen', carbonValue: 1.5, unit: 'meals' },
+  { id: 'junk-foods', category: 'food', name: 'Junk Foods', carbonValue: 0.15, unit: 'items' },
+  { id: 'biscuit-snacks', category: 'food', name: 'Biscuit Snacks', carbonValue: 0.08, unit: 'items' },
+  { id: 'finger-foods', category: 'food', name: 'Finger Foods', carbonValue: 0.12, unit: 'items' },
+  { id: 'food-on-stick', category: 'food', name: 'Food-on-a-Stick', carbonValue: 0.1, unit: 'items' },
+  { id: 'rice-bowls', category: 'food', name: 'Rice Bowls', carbonValue: 0.8, unit: 'items' },
+  { id: 'bottled-water', category: 'food', name: 'Bottled Water', carbonValue: 0.1, unit: 'items' },
+  { id: 'bottled-juice', category: 'food', name: 'Bottled Juice', carbonValue: 0.12, unit: 'items' },
+  { id: 'energy-drinks', category: 'food', name: 'Energy Drinks', carbonValue: 0.15, unit: 'items' },
+  { id: 'softdrinks', category: 'food', name: 'Softdrinks', carbonValue: 0.12, unit: 'items' },
+  { id: 'juice-packs', category: 'food', name: 'Juice Packs', carbonValue: 0.08, unit: 'items' },
+  { id: 'fizz-drinks', category: 'food', name: 'Fizz Drinks', carbonValue: 0.1, unit: 'items' },
+  { id: 'iced-coffee', category: 'food', name: 'Iced Coffee', carbonValue: 0.2, unit: 'items' },
+  { id: 'ice-cream', category: 'food', name: 'Ice Cream / Frozen Yogurt', carbonValue: 0.25, unit: 'items' },
+  { id: 'candies', category: 'food', name: 'Candies / Gummies', carbonValue: 0.05, unit: 'items' },
   
   // Waste
   { id: 'plastic-bottle', category: 'waste', name: 'Plastic Bottle Used', carbonValue: 0.1, unit: 'items' },
-  { id: 'plastic-sachet', category: 'waste', name: 'Plastic Sachet', carbonValue: 0.05, unit: 'items' },
-  { id: 'recycling', category: 'waste', name: 'Recycling Action', carbonValue: -0.2, unit: 'items' },
-  { id: 'composting', category: 'waste', name: 'Composting', carbonValue: -0.3, unit: 'kg' },
+  { id: 'paper-used', category: 'waste', name: 'Paper Used', carbonValue: 0.05, unit: 'items' },
+  { id: 'plastic-used', category: 'waste', name: 'Plastic Used', carbonValue: 0.08, unit: 'items' },
+  { id: 'food-thrown', category: 'waste', name: 'Food Thrown', carbonValue: 0.2, unit: 'items' },
 ];
 
 const categoryConfig = {
