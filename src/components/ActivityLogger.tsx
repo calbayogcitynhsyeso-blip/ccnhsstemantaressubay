@@ -29,6 +29,7 @@ const activities: Activity[] = [
   { id: 'motorcycle', category: 'transport', name: 'Motorcycle', carbonValue: 0.07, unit: 'km' },
   { id: 'jeepney', category: 'transport', name: 'Jeepney', carbonValue: 0.05, unit: 'km' },
   { id: 'bus', category: 'transport', name: 'Bus', carbonValue: 0.03, unit: 'km' },
+  { id: 'van', category: 'transport', name: 'Van', carbonValue: 0.12, unit: 'km' },
   { id: 'car', category: 'transport', name: 'Private Car', carbonValue: 0.15, unit: 'km' },
   
   // Electricity (per hour of use)
