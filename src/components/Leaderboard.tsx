@@ -12,17 +12,26 @@ interface LeaderboardEntry {
   carbonScore: number;
   streak: number;
   badge?: string;
+  userId: string;
 }
 
 export function Leaderboard() {
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setCurrentUserId(user?.id || null);
+    };
+    getCurrentUser();
+  }, []);
 
   const fetchLeaderboard = async () => {
     try {
       setIsLoading(true);
       
-      // Call the security definer function to get leaderboard stats
       const { data: stats, error } = await supabase
         .rpc('get_leaderboard_stats');
 
@@ -33,14 +42,11 @@ export function Leaderboard() {
         return;
       }
 
-      // Filter out users with no activity and calculate streak
       const userStats = stats
         .filter(stat => stat.avg_carbon_score > 0)
         .map(stat => {
-          // Calculate streak (consecutive days) based on last_activity_date
           let streak = stat.streak_days || 0;
           
-          // Verify streak is still active (last activity within 1 day)
           if (stat.last_activity_date) {
             const lastActivity = new Date(stat.last_activity_date);
             const today = new Date();
@@ -49,7 +55,6 @@ export function Leaderboard() {
             
             const daysSinceLastActivity = Math.floor((today.getTime() - lastActivity.getTime()) / (1000 * 60 * 60 * 24));
             
-            // If more than 1 day has passed, reset streak
             if (daysSinceLastActivity > 1) {
               streak = 0;
             }
@@ -64,10 +69,8 @@ export function Leaderboard() {
           };
         });
 
-      // Sort by carbon score (lower is better)
       const sortedStats = userStats.sort((a, b) => a.carbonScore - b.carbonScore);
 
-      // Assign ranks and badges
       const leaderboard: LeaderboardEntry[] = sortedStats.map((stat, index) => ({
         rank: index + 1,
         name: stat.name,
@@ -75,11 +78,11 @@ export function Leaderboard() {
         carbonScore: stat.carbonScore,
         streak: stat.streak,
         badge: index === 0 ? "Eco Champion" : index === 1 ? "Green Warrior" : index === 2 ? "Nature Friend" : undefined,
+        userId: stat.userId,
       }));
 
       setLeaderboardData(leaderboard);
     } catch (error: any) {
-      // Log minimal info for debugging in development only
       if (process.env.NODE_ENV === 'development') {
         console.error('Leaderboard fetch error code:', error?.code);
       }
@@ -91,7 +94,6 @@ export function Leaderboard() {
   useEffect(() => {
     fetchLeaderboard();
 
-    // Subscribe to real-time updates on activity_logs
     const channel = supabase
       .channel('leaderboard-changes')
       .on(
@@ -111,6 +113,7 @@ export function Leaderboard() {
       supabase.removeChannel(channel);
     };
   }, []);
+
   const getRankIcon = (rank: number) => {
     switch (rank) {
       case 1:
@@ -130,6 +133,52 @@ export function Leaderboard() {
     if (rank === 3) return { backgroundColor: 'hsl(35 80% 55% / 0.1)', color: 'hsl(35 80% 45%)' };
     return {};
   };
+
+  const top10 = leaderboardData.slice(0, 10);
+  const currentUserEntry = leaderboardData.find(entry => entry.userId === currentUserId);
+  const currentUserInTop10 = currentUserEntry && currentUserEntry.rank <= 10;
+
+  const renderTableRow = (entry: LeaderboardEntry, isCurrentUser: boolean = false) => (
+    <TableRow 
+      key={entry.rank} 
+      className={`hover:bg-muted/30 ${isCurrentUser ? 'bg-primary/10 border-l-4 border-l-primary' : ''}`}
+    >
+      <TableCell className="font-medium">
+        <div className="flex items-center justify-center">
+          {getRankIcon(entry.rank)}
+        </div>
+      </TableCell>
+      <TableCell className="font-medium">
+        {entry.name}
+        {isCurrentUser && <span className="ml-2 text-xs text-primary">(You)</span>}
+      </TableCell>
+      <TableCell className="text-muted-foreground">{entry.class}</TableCell>
+      <TableCell className="text-right">
+        <span className="font-medium" style={{color: 'hsl(142.1 76.2% 36.3%)'}}>
+          {entry.carbonScore} kg CO₂
+        </span>
+      </TableCell>
+      <TableCell className="text-right">
+        <div className="flex items-center justify-end space-x-1">
+          <TrendingDown className="w-3 h-3" style={{color: 'hsl(142.1 76.2% 36.3%)'}} />
+          <span className="text-sm">{entry.streak} days</span>
+        </div>
+      </TableCell>
+      <TableCell className="text-center">
+        {entry.badge ? (
+          <Badge 
+            variant="secondary" 
+            className="text-xs"
+            style={getRankBadgeColor(entry.rank)}
+          >
+            {entry.badge}
+          </Badge>
+        ) : (
+          <span className="text-muted-foreground text-xs">-</span>
+        )}
+      </TableCell>
+    </TableRow>
+  );
 
   if (isLoading) {
     return (
@@ -152,7 +201,6 @@ export function Leaderboard() {
         </p>
       </div>
 
-      {/* Top 3 Spotlight or Empty State */}
       {leaderboardData.length === 0 ? (
         <Card className="bg-gradient-card border-0 shadow-medium max-w-2xl mx-auto mb-12">
           <CardContent className="p-12 text-center">
@@ -177,13 +225,16 @@ export function Leaderboard() {
                 entry.rank === 1 
                   ? 'bg-gradient-card border-0 shadow-glow' 
                   : 'bg-gradient-card border border-border/50 shadow-medium'
-              }`}
+              } ${entry.userId === currentUserId ? 'ring-2 ring-primary' : ''}`}
             >
               <CardHeader className="text-center pb-3">
                 <div className="flex justify-center mb-3">
                   {getRankIcon(entry.rank)}
                 </div>
-                <CardTitle className="text-lg">{entry.name}</CardTitle>
+                <CardTitle className="text-lg">
+                  {entry.name}
+                  {entry.userId === currentUserId && <span className="ml-2 text-xs text-primary">(You)</span>}
+                </CardTitle>
                 <CardDescription>{entry.class}</CardDescription>
               </CardHeader>
               <CardContent className="text-center">
@@ -214,7 +265,6 @@ export function Leaderboard() {
         </div>
       )}
 
-      {/* Full Leaderboard Table */}
       {leaderboardData.length === 0 ? (
         <Card className="bg-gradient-card border-0 shadow-medium">
           <CardHeader>
@@ -239,7 +289,7 @@ export function Leaderboard() {
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
               <Trophy className="w-5 h-5" style={{color: 'hsl(142.1 76.2% 36.3%)'}} />
-              <span>Full Rankings</span>
+              <span>Top 10 Rankings</span>
             </CardTitle>
             <CardDescription>
               Rankings based on lowest average daily carbon footprint
@@ -258,48 +308,24 @@ export function Leaderboard() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {leaderboardData.map((entry) => (
-                  <TableRow key={entry.rank} className="hover:bg-muted/30">
-                    <TableCell className="font-medium">
-                      <div className="flex items-center justify-center">
-                        {getRankIcon(entry.rank)}
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-medium">{entry.name}</TableCell>
-                    <TableCell className="text-muted-foreground">{entry.class}</TableCell>
-                    <TableCell className="text-right">
-                      <span className="font-medium" style={{color: 'hsl(142.1 76.2% 36.3%)'}}>
-                        {entry.carbonScore} kg CO₂
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex items-center justify-end space-x-1">
-                        <TrendingDown className="w-3 h-3" style={{color: 'hsl(142.1 76.2% 36.3%)'}} />
-                        <span className="text-sm">{entry.streak} days</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {entry.badge ? (
-                        <Badge 
-                          variant="secondary" 
-                          className="text-xs"
-                          style={getRankBadgeColor(entry.rank)}
-                        >
-                          {entry.badge}
-                        </Badge>
-                      ) : (
-                        <span className="text-muted-foreground text-xs">-</span>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {top10.map((entry) => renderTableRow(entry, entry.userId === currentUserId))}
+                
+                {currentUserEntry && !currentUserInTop10 && (
+                  <>
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center py-2 text-muted-foreground text-sm">
+                        ・・・
+                      </TableCell>
+                    </TableRow>
+                    {renderTableRow(currentUserEntry, true)}
+                  </>
+                )}
               </TableBody>
             </Table>
           </CardContent>
         </Card>
       )}
 
-      {/* Call to Action */}
       <div className="text-center mt-8">
         <p className="text-muted-foreground text-sm">
           Keep logging your activities to climb the leaderboard and earn badges!
