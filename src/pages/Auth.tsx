@@ -14,18 +14,14 @@ import { z } from "zod";
 const signUpSchema = z.object({
   name: z.string()
     .trim()
-    .min(2, "Username must be at least 2 characters")
-    .max(100, "Username must be less than 100 characters"),
+    .min(2, "Full name must be at least 2 characters")
+    .max(100, "Full name must be less than 100 characters"),
   grade: z.string()
     .trim()
-    .optional()
-    .default("")
-    .transform(val => val || ""),
+    .min(1, "Grade is required"),
   section: z.string()
     .trim()
-    .optional()
-    .default("")
-    .transform(val => val || ""),
+    .min(1, "Section is required"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters")
 });
@@ -412,39 +408,42 @@ export default function Auth() {
                   <div className="space-y-2">
                     <Label htmlFor="signup-name" className="flex items-center gap-2">
                       <User className="w-4 h-4" />
-                      Username
+                      Full Name <span className="text-destructive">*</span>
                     </Label>
                     <Input
                       id="signup-name"
                       type="text"
-                      placeholder="Choose a username"
+                      placeholder="Enter your real, full name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       required
                       className="transition-all focus:warm-glow"
                     />
+                    <p className="text-xs text-muted-foreground">Please use your real, full name</p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="grade">Grade (Optional)</Label>
+                      <Label htmlFor="grade">Grade <span className="text-destructive">*</span></Label>
                       <Input
                         id="grade"
                         type="text"
                         placeholder="e.g., Grade 10"
                         value={grade}
                         onChange={(e) => setGrade(e.target.value)}
+                        required
                         className="transition-all focus:warm-glow"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="section">Section (Optional)</Label>
+                      <Label htmlFor="section">Section <span className="text-destructive">*</span></Label>
                       <Input
                         id="section"
                         type="text"
                         placeholder="e.g., Section A"
                         value={section}
                         onChange={(e) => setSection(e.target.value)}
+                        required
                         className="transition-all focus:warm-glow"
                       />
                     </div>
