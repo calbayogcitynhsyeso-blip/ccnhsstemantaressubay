@@ -33,7 +33,7 @@ export function Hero() {
                 />
               </div>
               <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground">
-                C0₂
+                Subay
               </h1>
             </div>
             <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto">

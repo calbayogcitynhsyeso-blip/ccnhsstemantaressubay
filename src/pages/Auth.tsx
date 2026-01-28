@@ -242,7 +242,7 @@ export default function Auth() {
               />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome to C0₂</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">Welcome to Subay</h1>
           <p className="text-white/80">Join CCNHS YES-Organization in building a sustainable future</p>
         </div>
 
