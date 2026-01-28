@@ -40,7 +40,7 @@ const Index = () => {
       <footer className="bg-muted/30 py-8 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-muted-foreground">
-            © 2024 C0₂ - Calbayog City National High School YES-O
+            © 2024 C0₂ - Antareans
           </p>
         </div>
       </footer>

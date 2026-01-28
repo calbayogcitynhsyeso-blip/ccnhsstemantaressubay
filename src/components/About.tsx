@@ -139,7 +139,7 @@ export function About() {
             </div>
             <h4 className="font-semibold text-foreground mb-2">Follow Us</h4>
             <p className="text-muted-foreground text-sm">
-              CCNHS YES-Organization
+              Antareans
             </p>
           </div>
         </div>
