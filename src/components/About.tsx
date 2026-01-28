@@ -10,7 +10,7 @@ export function About() {
           About C0₂
         </h2>
         <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-          A project made by the Calbayog City National High School — Youth for Environment in Schools Organization S.Y. 2025-2026
+          A project made by the Antareans of Calbayog City National High School during the S.Y. of 2025-2026
         </p>
       </div>
 
