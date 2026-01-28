@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Car, Zap, UtensilsCrossed, Trash2, Plus, TrendingUp, Edit3, Star, Leaf, Recycle, Trophy } from "lucide-react";
+import { Car, Zap, UtensilsCrossed, Trash2, Plus, TrendingUp, Edit3, Star, Leaf, Recycle, Trophy, TreeDeciduous } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
@@ -12,7 +12,7 @@ import { useAchievementChecker } from "@/hooks/use-achievement-checker";
 
 interface Activity {
   id: string;
-  category: 'transport' | 'electricity' | 'food' | 'waste';
+  category: 'transport' | 'electricity' | 'food' | 'waste' | 'offset';
   name: string;
   carbonValue: number;
   unit: string;
@@ -64,13 +64,26 @@ const activities: Activity[] = [
   { id: 'paper-used', category: 'waste', name: 'Paper Used', carbonValue: 0.05, unit: 'items' },
   { id: 'plastic-used', category: 'waste', name: 'Plastic Used', carbonValue: 0.08, unit: 'items' },
   { id: 'food-thrown', category: 'waste', name: 'Food Thrown', carbonValue: 0.2, unit: 'items' },
+  
+  // Offset (Eco-practices that reduce carbon footprint)
+  { id: 'trees-planted', category: 'offset', name: 'Trees Planted', carbonValue: -5.0, unit: 'trees' },
+  { id: 'gardening', category: 'offset', name: 'Gardening', carbonValue: -0.5, unit: 'hours' },
+  { id: 'waste-segregated', category: 'offset', name: 'Waste Segregated', carbonValue: -0.1, unit: 'items' },
+  { id: 'conserved-electricity', category: 'offset', name: 'Conserved Electricity', carbonValue: -0.3, unit: 'hours' },
+  { id: 'conserved-water', category: 'offset', name: 'Conserved Water', carbonValue: -0.2, unit: 'liters' },
+  { id: 'composting', category: 'offset', name: 'Composting', carbonValue: -0.15, unit: 'kg' },
+  { id: 'reusable-bags', category: 'offset', name: 'Used Reusable Bags', carbonValue: -0.05, unit: 'uses' },
+  { id: 'carpooling', category: 'offset', name: 'Carpooling', carbonValue: -0.1, unit: 'km' },
+  { id: 'recycling', category: 'offset', name: 'Recycling', carbonValue: -0.08, unit: 'items' },
+  { id: 'refillable-water', category: 'offset', name: 'Used Refillable Water Bottle', carbonValue: -0.1, unit: 'uses' },
 ];
 
 const categoryConfig = {
   transport: { icon: Car, color: 'bg-primary', name: 'Transport' },
   electricity: { icon: Zap, color: 'bg-accent', name: 'Electricity' },
   food: { icon: UtensilsCrossed, color: 'bg-success', name: 'Food' },
-  waste: { icon: Trash2, color: 'bg-secondary', name: 'Waste' }
+  waste: { icon: Trash2, color: 'bg-secondary', name: 'Waste' },
+  offset: { icon: TreeDeciduous, color: 'bg-success', name: 'Offset' }
 };
 
 // Achievement definitions for checking
