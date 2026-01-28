@@ -103,10 +103,10 @@ export function About() {
       <div className="bg-gradient-card rounded-3xl p-8 border border-border/50 shadow-medium">
         <div className="text-center mb-8">
           <h3 className="text-2xl font-bold text-foreground mb-2">
-            Calbayog City National High School – YES-O
+            Calbayog City National High School
           </h3>
           <p className="text-muted-foreground">
-            Youth for Environment in Schools Organization
+            STEM 12 - ANTARES
           </p>
         </div>
 
@@ -129,7 +129,7 @@ export function About() {
             </div>
             <h4 className="font-semibold text-foreground mb-2">Email</h4>
             <p className="text-muted-foreground text-sm">
-              calbayogcitynhsyeso@gmail.com
+              ccnhsantareans@gmail.com
             </p>
           </div>
 
@@ -153,7 +153,7 @@ export function About() {
               backgroundColor: 'hsl(142.1 76.2% 36.3%)',
             }}
           >
-            Contact YES-O
+            Contact Antareans
           </Button>
         </div>
       </div>
