@@ -7,7 +7,7 @@ export function About() {
     <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-          About C0₂
+          About Subay
         </h2>
         <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
           A project made by the Antareans of Calbayog City National High School during the S.Y. of 2025-2026
@@ -23,14 +23,14 @@ export function About() {
                 <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{background: 'var(--gradient-primary)'}}>
                   <Target className="w-5 h-5 text-white" />
                 </div>
-                <CardTitle className="text-xl">C0₂'s Mission</CardTitle>
+                <CardTitle className="text-xl">Subay's Mission</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground leading-relaxed">
                 To promote environmental awareness by helping students, teachers, and the school 
                 community track and reduce their carbon footprint through simple daily habits. 
-                By raising awareness of our impact on the planet, C0₂ aims to encourage 
+                By raising awareness of our impact on the planet, Subay aims to encourage 
                 sustainable practices within and beyond the school.
               </p>
             </CardContent>
@@ -42,7 +42,7 @@ export function About() {
                 <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{background: 'var(--gradient-warm)'}}>
                   <Leaf className="w-5 h-5 text-white" />
                 </div>
-                <CardTitle className="text-xl">C0₂'s Vision</CardTitle>
+                <CardTitle className="text-xl">Subay's Vision</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
@@ -57,7 +57,7 @@ export function About() {
 
         {/* Features */}
         <div className="space-y-6">
-          <h3 className="text-2xl font-bold text-foreground mb-6">Why C0₂?</h3>
+          <h3 className="text-2xl font-bold text-foreground mb-6">Why Subay?</h3>
           
           <div className="space-y-4">
             <div className="flex items-start space-x-4">
