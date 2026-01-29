@@ -55,7 +55,7 @@ export function Navigation() {
             <img 
               src={subayLogo} 
               alt="Subay Logo" 
-              className="h-8 w-auto object-contain"
+              className="h-6 w-auto object-contain"
             />
           </div>
 
@@ -96,7 +96,7 @@ export function Navigation() {
                     <img 
                       src={subayLogo} 
                       alt="Subay Logo" 
-                      className="h-8 w-auto object-contain"
+                      className="h-6 w-auto object-contain"
                     />
                   </div>
                   
