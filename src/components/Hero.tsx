@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { TrendingDown, Users, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/yes-o-group-photo.png";
-import yesoLogo from "@/assets/yes-o-logo-cropped.png";
+import subayLogo from "@/assets/subay-logo-text.png";
 
 export function Hero() {
   const navigate = useNavigate();
@@ -24,17 +24,12 @@ export function Hero() {
         <div className="space-y-8">
           {/* Logo and Title */}
           <div className="space-y-4">
-            <div className="flex items-center justify-center space-x-4">
-              <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full p-2 shadow-glow">
-                <img 
-                  src={yesoLogo} 
-                  alt="YES-O Logo" 
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground">
-                Subay
-              </h1>
+            <div className="flex items-center justify-center">
+              <img 
+                src={subayLogo} 
+                alt="Subay Logo" 
+                className="h-24 md:h-32 w-auto object-contain drop-shadow-lg"
+              />
             </div>
             <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto">
               Track your carbon footprint, make a difference.
