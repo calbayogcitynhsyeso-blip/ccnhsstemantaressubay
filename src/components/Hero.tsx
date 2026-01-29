@@ -28,7 +28,8 @@ export function Hero() {
               <img 
                 src={subayLogo} 
                 alt="Subay Logo" 
-                className="h-24 md:h-32 w-auto object-contain drop-shadow-lg"
+                className="h-24 md:h-32 w-auto object-contain"
+                style={{ filter: 'drop-shadow(2px 0 0 white) drop-shadow(-2px 0 0 white) drop-shadow(0 2px 0 white) drop-shadow(0 -2px 0 white) drop-shadow(0 4px 8px rgba(0,0,0,0.3))' }}
               />
             </div>
             <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto">
