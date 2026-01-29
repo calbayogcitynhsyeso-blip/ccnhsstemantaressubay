@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Home, BarChart3, Trophy, Crown, Info, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import yesoLogo from "@/assets/yes-o-logo-cropped.png";
+import subayLogo from "@/assets/subay-logo-text.png";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,9 +53,9 @@ export function Navigation() {
           {/* Logo */}
           <div className="flex items-center">
             <img 
-              src={yesoLogo} 
-              alt="YES-O Logo" 
-              className="w-10 h-10 object-contain"
+              src={subayLogo} 
+              alt="Subay Logo" 
+              className="h-8 w-auto object-contain"
             />
           </div>
 
@@ -94,9 +94,9 @@ export function Navigation() {
                 <div className="flex flex-col space-y-6 mt-8">
                   <div className="flex items-center pb-6 border-b border-border">
                     <img 
-                      src={yesoLogo} 
-                      alt="YES-O Logo" 
-                      className="w-10 h-10 object-contain"
+                      src={subayLogo} 
+                      alt="Subay Logo" 
+                      className="h-8 w-auto object-contain"
                     />
                   </div>
                   
