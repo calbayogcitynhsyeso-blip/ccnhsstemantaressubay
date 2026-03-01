@@ -381,6 +381,7 @@ export function ActivityLogger() {
                       onClick={() => updateActivity(activity.id, -1)}
                       disabled={quantity === 0}
                       className="w-8 h-8 p-0"
+                      aria-label={`Decrease ${activity.name} quantity`}
                     >
                       -
                     </Button>
@@ -411,6 +412,7 @@ export function ActivityLogger() {
                       size="sm"
                       onClick={() => updateActivity(activity.id, 1)}
                       className="w-8 h-8 p-0"
+                      aria-label={`Increase ${activity.name} quantity`}
                     >
                       <Plus className="w-4 h-4" />
                     </Button>
