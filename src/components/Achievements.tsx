@@ -172,7 +172,7 @@ export function Achievements({ user }: AchievementsProps) {
             <div className="text-3xl font-bold mb-2" style={{color: 'hsl(142.1 76.2% 36.3%)'}}>
               {unlockedCount} / {totalCount}
             </div>
-            <Progress value={(unlockedCount / totalCount) * 100} className="h-2" />
+            <Progress value={(unlockedCount / totalCount) * 100} className="h-2" aria-label={`${unlockedCount} of ${totalCount} achievements unlocked`} />
             <p className="text-muted-foreground text-sm mt-2">
               Achievements unlocked
             </p>
@@ -247,6 +247,7 @@ export function Achievements({ user }: AchievementsProps) {
                           <Progress 
                             value={progressPercentage} 
                             className="h-2"
+                            aria-label={`${achievement.name} progress: ${achievement.progress} of ${achievement.maxProgress}`}
                           />
                           {achievement.unlocked && (
                             <Badge variant="default" className="bg-success text-success-foreground">
