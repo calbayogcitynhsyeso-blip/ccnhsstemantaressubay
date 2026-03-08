@@ -23,7 +23,7 @@ export function About() {
                 <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{background: 'var(--gradient-primary)'}}>
                   <Target className="w-5 h-5 text-white" />
                 </div>
-                <CardTitle className="text-xl">Subay's Mission</CardTitle>
+                <CardTitle className="text-xl">CEmiTrack's Mission</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
