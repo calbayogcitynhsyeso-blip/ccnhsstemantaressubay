@@ -57,7 +57,7 @@ export function About() {
 
         {/* Features */}
         <div className="space-y-6">
-          <h3 className="text-2xl font-bold text-foreground mb-6">Why Subay?</h3>
+          <h3 className="text-2xl font-bold text-foreground mb-6">Why CEmiTrack?</h3>
           
           <div className="space-y-4">
             <div className="flex items-start space-x-4">
