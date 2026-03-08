@@ -7,7 +7,7 @@ export function About() {
     <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-          About Subay
+          About CEmiTrack
         </h2>
         <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
           A project made by the Antareans of Calbayog City National High School during the S.Y. of 2025-2026
