@@ -53,9 +53,10 @@ export function Navigation() {
           {/* Logo */}
           <div className="flex items-center">
             <img 
-              src={subayLogo} 
-              alt="Subay Logo" 
+              src={cemitrackLogo} 
+              alt="CEmiTrack Logo" 
               className="h-10 w-auto object-contain"
+              style={{ filter: 'drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white)' }}
             />
           </div>
 
