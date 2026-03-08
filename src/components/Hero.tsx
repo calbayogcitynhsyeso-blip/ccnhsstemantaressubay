@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { TrendingDown, Users, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/yes-o-group-photo.png";
-import subayLogo from "@/assets/subay-logo-text.png";
+import cemitrackLogo from "@/assets/cemitrack-logo.png";
 
 export function Hero() {
   const navigate = useNavigate();
@@ -28,8 +28,8 @@ export function Hero() {
           <div className="space-y-4">
             <div className="flex items-center justify-center">
               <img 
-                src={subayLogo} 
-                alt="Subay Logo" 
+                src={cemitrackLogo} 
+                alt="CEmiTrack Logo" 
                 className="h-24 md:h-32 w-auto object-contain"
                 fetchPriority="high"
                 loading="eager"

@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Home, BarChart3, Trophy, Crown, Info, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import subayLogo from "@/assets/subay-logo-text.png";
+import cemitrackLogo from "@/assets/cemitrack-logo.png";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,9 +53,10 @@ export function Navigation() {
           {/* Logo */}
           <div className="flex items-center">
             <img 
-              src={subayLogo} 
-              alt="Subay Logo" 
+              src={cemitrackLogo} 
+              alt="CEmiTrack Logo" 
               className="h-10 w-auto object-contain"
+              style={{ filter: 'drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white)' }}
             />
           </div>
 
@@ -94,9 +95,10 @@ export function Navigation() {
                 <div className="flex flex-col space-y-6 mt-8">
                   <div className="flex items-center pb-6 border-b border-border">
                     <img 
-                      src={subayLogo} 
-                      alt="Subay Logo" 
+                      src={cemitrackLogo} 
+                      alt="CEmiTrack Logo" 
                       className="h-10 w-auto object-contain"
+                      style={{ filter: 'drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white)' }}
                     />
                   </div>
                   
