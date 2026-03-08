@@ -30,7 +30,7 @@ export function About() {
               <p className="text-muted-foreground leading-relaxed">
                 To promote environmental awareness by helping students, teachers, and the school 
                 community track and reduce their carbon footprint through simple daily habits. 
-                By raising awareness of our impact on the planet, Subay aims to encourage 
+                By raising awareness of our impact on the planet, CEmiTrack aims to encourage 
                 sustainable practices within and beyond the school.
               </p>
             </CardContent>
