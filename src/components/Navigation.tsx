@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Home, BarChart3, Trophy, Crown, Info, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import subayLogo from "@/assets/subay-logo-text.png";
+import cemitrackLogo from "@/assets/cemitrack-logo.png";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
