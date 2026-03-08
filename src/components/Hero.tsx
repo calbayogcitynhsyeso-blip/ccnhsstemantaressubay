@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { TrendingDown, Users, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/yes-o-group-photo.png";
-import subayLogo from "@/assets/subay-logo-text.png";
+import cemitrackLogo from "@/assets/cemitrack-logo.png";
 
 export function Hero() {
   const navigate = useNavigate();
