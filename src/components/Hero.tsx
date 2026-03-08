@@ -28,8 +28,8 @@ export function Hero() {
           <div className="space-y-4">
             <div className="flex items-center justify-center">
               <img 
-                src={subayLogo} 
-                alt="Subay Logo" 
+                src={cemitrackLogo} 
+                alt="CEmiTrack Logo" 
                 className="h-24 md:h-32 w-auto object-contain"
                 fetchPriority="high"
                 loading="eager"
