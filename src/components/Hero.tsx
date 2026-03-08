@@ -30,7 +30,7 @@ export function Hero() {
               <img 
                 src={cemitrackLogo} 
                 alt="CEmiTrack Logo" 
-                className="h-[27rem] md:h-[36rem] w-auto object-contain"
+                className="h-[13.5rem] md:h-72 w-auto object-contain"
                 fetchPriority="high"
                 loading="eager"
                 style={{ filter: 'drop-shadow(2px 0 0 white) drop-shadow(-2px 0 0 white) drop-shadow(0 2px 0 white) drop-shadow(0 -2px 0 white) drop-shadow(0 4px 8px rgba(0,0,0,0.3))' }}
