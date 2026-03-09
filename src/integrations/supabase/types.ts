@@ -129,6 +129,10 @@ export type Database = {
           user_id: string
         }[]
       }
+      unlock_achievement: {
+        Args: { _achievement_id: string; _achievement_name: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
