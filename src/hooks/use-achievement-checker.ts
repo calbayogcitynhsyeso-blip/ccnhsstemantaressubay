@@ -32,18 +32,16 @@ export function useAchievementChecker() {
         // Skip if already unlocked
         if (unlockedIds.has(achievement.id)) continue;
 
-        // Check if condition is met
+        // Client-side pre-check (server validates authoritatively)
         if (achievement.checkCondition(checkData)) {
-          // Unlock the achievement
-          const { error } = await supabase
-            .from('user_achievements')
-            .insert({
-              user_id: userId,
-              achievement_id: achievement.id,
-              achievement_name: achievement.name
+          // Call server-side function that validates conditions before inserting
+          const { data: unlocked, error } = await supabase
+            .rpc('unlock_achievement', {
+              _achievement_id: achievement.id,
+              _achievement_name: achievement.name
             });
 
-          if (!error) {
+          if (!error && unlocked) {
             // Show certificate for the first unlocked achievement
             setNewAchievement(achievement);
             return achievement;
