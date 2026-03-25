@@ -129,7 +129,7 @@ export function About() {
             </div>
             <h4 className="font-semibold text-foreground mb-2">Email</h4>
             <p className="text-muted-foreground text-sm">
-              ccnhsantareans@gmail.com
+              calbayogcitynhsyeso@gmail.com
             </p>
           </div>
 
