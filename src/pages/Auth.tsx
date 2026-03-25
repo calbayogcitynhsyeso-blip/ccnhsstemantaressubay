@@ -243,7 +243,7 @@ export default function Auth() {
             </div>
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">Welcome to EcoPulse</h1>
-          <p className="text-white/80">Join the Antareans in building a sustainable future</p>
+          <p className="text-white/80">Join the CCNHS YES-Organization in building a sustainable future</p>
         </div>
 
         <Card className="bg-white/95 backdrop-blur-sm border-0 warm-glow animate-scale-in">
