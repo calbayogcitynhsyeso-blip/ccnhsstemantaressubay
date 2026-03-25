@@ -55,7 +55,7 @@ export function Navigation() {
             <img 
               src={cemitrackLogo} 
               alt="EcoPulse Logo" 
-className="h-30 w-auto object-contain"
+className="h-20 w-auto object-contain"
               style={{ filter: 'drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white)' }}
             />
           </div>
@@ -97,7 +97,7 @@ className="h-30 w-auto object-contain"
                     <img 
                       src={cemitrackLogo} 
                       alt="EcoPulse Logo" 
-className="h-30 w-auto object-contain"
+className="h-20 w-auto object-contain"
                       style={{ filter: 'drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white)' }}
                     />
                   </div>
