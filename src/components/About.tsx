@@ -10,7 +10,7 @@ export function About() {
           About EcoPulse
         </h2>
         <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-          A project made by the Antareans of Calbayog City National High School during the S.Y. of 2025-2026
+          A project made by the CCNHS YES-Organization of Calbayog City National High School during the S.Y. of 2025-2026
         </p>
       </div>
 
@@ -106,7 +106,7 @@ export function About() {
             Calbayog City National High School
           </h3>
           <p className="text-muted-foreground">
-            STEM 12 - ANTARES
+            CCNHS YES-Organization
           </p>
         </div>
 
@@ -139,7 +139,7 @@ export function About() {
             </div>
             <h4 className="font-semibold text-foreground mb-2">Follow Us</h4>
             <p className="text-muted-foreground text-sm">
-              Antareans
+              CCNHS YES-Organization
             </p>
           </div>
         </div>
@@ -153,7 +153,7 @@ export function About() {
               backgroundColor: 'hsl(142.1 76.2% 36.3%)',
             }}
           >
-            Contact Antareans
+            Contact CCNHS YES-Organization
           </Button>
         </div>
       </div>
