@@ -29,7 +29,7 @@ export function Hero() {
             <div className="flex items-center justify-center">
               <img 
                 src={cemitrackLogo} 
-                alt="CEmiTrack Logo" 
+                alt="EcoPulse Logo" 
                 className="h-36 md:h-48 w-auto object-contain"
                 fetchPriority="high"
                 loading="eager"

@@ -54,7 +54,7 @@ export function Navigation() {
           <div className="flex items-center">
             <img 
               src={cemitrackLogo} 
-              alt="CEmiTrack Logo" 
+              alt="EcoPulse Logo" 
 className="h-30 w-auto object-contain"
               style={{ filter: 'drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white)' }}
             />
@@ -96,7 +96,7 @@ className="h-30 w-auto object-contain"
                   <div className="flex items-center pb-6 border-b border-border">
                     <img 
                       src={cemitrackLogo} 
-                      alt="CEmiTrack Logo" 
+                      alt="EcoPulse Logo" 
 className="h-30 w-auto object-contain"
                       style={{ filter: 'drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white)' }}
                     />
